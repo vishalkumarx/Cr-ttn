@@ -142,9 +142,9 @@
             left: 50%;
             width: 0;
             height: 0;
-            border-left: 10px solid transparent;
-            border-right: 10px solid transparent;
-            border-bottom: 20px solid #004d99;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 16px solid #004d99;
             transform: translateX(-50%);
         }
 
@@ -416,7 +416,7 @@
         <h1 class="main-heading">COMMUNICATION NETWORK CHART OF DISTT. TARN TARAN</h1>
 
         <div class="search-container">
-            <input type="text" id="search-input" class="search-input" placeholder="Search police station or officer...">
+            <input type="text" id="search-input" class="search-input" placeholder="Search police station or officer details...">
             <ul id="autocomplete-list" class="autocomplete-list"></ul>
         </div>
         
@@ -566,21 +566,6 @@
             { "Name of Officer": "Sh. Jaswinder singh", "Designation": "Supdt. Sub Jail Patti", "Office/Residence": "01851-244567", "Mobile Number": "97796-38836", "Reader Name": "HC Sukhdev Singh", "Reader Mobile Number": "98155-25966", "Police Station": "Patti" }
         ];
 
-        // This object maps the police station names to a simplified set of data.
-        // It's used for the main chart's click action to avoid showing a massive list.
-        const chartContactData = {
-            "City TTN": { "Officers": "Sh. Harmanbir Singh, Sh. Deepak Pareek IPS" },
-            "Jhabal": { "Officers": "Sh. Baljit Singh, Sh. Ajayraj Singh" },
-            "S.A Khan": { "Officers": "Sh. Kamaljit Singh, Sh Grinderpal Singh" },
-            "Verowal": { "Officers": "Sh.Harpreet Singh" },
-            "Goindwal Sahib": { "Officers": "Sh. Gulzar Singh, Sh. Rashpal Singh" },
-            "Patti": { "Officers": "Sh. Lovekesh, Sh. Jaswinder singh" },
-            "Bhikhiwind": { "Officers": "Sh. Preetinder Singh, Sh. Atul Soni" },
-            "Sadar Patti": { "Officers": "Sh. Harinderjit Singh" },
-            "DPO Tarn Taran": { "Officers": "Insp Sharanjit Singh, Sh. Navtej Singh" },
-            "Supdt. Jail Goindwal Sahib": { "Officers": "Sh. Varun sharma" }
-        };
-
         const detailsModal = document.getElementById("detailsModal");
         const detailsModalTitle = document.getElementById("details-modal-title");
         const detailsContent = document.getElementById("details-content");
@@ -601,8 +586,9 @@
             tableHtml += '</tr></thead><tbody>';
 
             // Generate table rows
-            officerData.forEach((officer, index) => {
-                tableHtml += `<tr class="officer-row" data-officer-name="${officer['Name of Officer']}">`;
+            officerData.forEach((officer) => {
+                const officerNameId = officer['Name of Officer'].replace(/[^a-zA-Z0-9]/g, '');
+                tableHtml += `<tr class="officer-row" data-officer-id="${officerNameId}" data-station-name="${officer['Police Station']}">`;
                 headers.forEach(header => {
                     tableHtml += `<td>${officer[header]}</td>`;
                 });
@@ -620,7 +606,6 @@
         function toggleSubdivision(subdivisionId) {
             const subdivisionDiv = document.querySelector(`.sub-division[data-subdivision="${subdivisionId}"]`);
             const groupDiv = document.querySelector(`.sub-division-group[data-subdivision="${subdivisionId}"]`);
-
             subdivisionDiv.classList.toggle('expanded');
             groupDiv.classList.toggle('expanded');
         }
@@ -630,21 +615,9 @@
             const target = event.target.closest('.police-station');
             if (target) {
                 const stationName = target.querySelector('.station-name-text').textContent.trim();
-                showContactDetailsFromChart(stationName);
+                alert(`Police Station: ${stationName}`);
             }
         });
-
-        // Function to show simplified contact details from the chart
-        function showContactDetailsFromChart(stationName) {
-            const details = chartContactData[stationName];
-            if (details) {
-                detailsModalTitle.textContent = `Officers for ${stationName}`;
-                detailsContent.innerHTML = `<p><strong>Officers:</strong> ${details.Officers}</p>`;
-                openModal('detailsModal');
-            } else {
-                alert(`No contact details found for ${stationName}.`);
-            }
-        }
 
         function openModal(modalId) {
             const modalElement = document.getElementById(modalId);
@@ -667,36 +640,48 @@
             autocompleteList.innerHTML = '';
             
             if (searchTerm.length > 0) {
-                // Search both police stations and officers
-                const stationResults = allPoliceStations.filter(station => 
-                    station.dataset.code.toLowerCase().includes(searchTerm) || 
-                    station.querySelector('.station-name-text').textContent.toLowerCase().includes(searchTerm)
-                ).map(s => s.querySelector('.station-name-text').textContent.trim());
+                const combinedResults = new Set();
+                
+                // Search officer data for any matching detail
+                officerData.forEach(officer => {
+                    const officerName = officer['Name of Officer'];
+                    const stationName = officer['Police Station'];
+                    let foundMatch = false;
+                    for (const key in officer) {
+                        if (officer.hasOwnProperty(key) && String(officer[key]).toLowerCase().includes(searchTerm)) {
+                            foundMatch = true;
+                            break;
+                        }
+                    }
+                    if (foundMatch) {
+                        combinedResults.add({ type: 'officer', name: officerName, station: stationName, designation: officer['Designation'] });
+                    }
+                });
 
-                const officerResults = officerData.filter(officer =>
-                    officer['Name of Officer'].toLowerCase().includes(searchTerm) ||
-                    officer['Designation'].toLowerCase().includes(searchTerm)
-                ).map(o => `${o['Name of Officer']} - ${o['Designation']}`);
+                // Search police stations by name or code
+                allPoliceStations.forEach(station => {
+                    const stationName = station.querySelector('.station-name-text').textContent.trim();
+                    const stationCode = station.dataset.code;
+                    if (stationName.toLowerCase().includes(searchTerm) || stationCode.toLowerCase().includes(searchTerm)) {
+                        combinedResults.add({ type: 'station', name: stationName });
+                    }
+                });
 
-                const combinedResults = [...new Set([...stationResults, ...officerResults])];
-
-                if (combinedResults.length > 0) {
+                if (combinedResults.size > 0) {
                     combinedResults.forEach(result => {
                         const li = document.createElement('li');
-                        li.textContent = result;
+                        if (result.type === 'officer') {
+                             li.textContent = `${result.name} (${result.designation}) - ${result.station}`;
+                        } else {
+                            li.textContent = result.name;
+                        }
+
                         li.addEventListener('click', () => {
-                            let stationName = '';
-                            let officerName = '';
-
-                            const matchedOfficer = officerData.find(o => `${o['Name of Officer']} - ${o['Designation']}` === result);
-                            if (matchedOfficer) {
-                                officerName = matchedOfficer['Name of Officer'];
-                                stationName = matchedOfficer['Police Station'];
-                            } else {
-                                stationName = result;
-                            }
-
-                            highlightItem(stationName, officerName);
+                            clearHighlights();
+                            let stationName = result.type === 'officer' ? result.station : result.name;
+                            let officerId = result.type === 'officer' ? result.name.replace(/[^a-zA-Z0-9]/g, '') : null;
+                            
+                            highlightItem(stationName, officerId);
                             searchInput.value = '';
                             autocompleteList.style.display = 'none';
                         });
@@ -718,7 +703,7 @@
             }
         });
 
-        function highlightItem(stationName, officerName = '') {
+        function highlightItem(stationName, officerId = null) {
             clearHighlights();
             const stationToHighlight = document.querySelector(`.police-station .station-name-text[data-name="${stationName}"]`).closest('.police-station');
             if (stationToHighlight) {
@@ -733,9 +718,8 @@
                 stationToHighlight.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
 
-            // Highlight the officer row if an officer was selected
-            if (officerName) {
-                const officerRow = document.querySelector(`.officer-row[data-officer-name="${officerName}"]`);
+            if (officerId) {
+                const officerRow = document.querySelector(`.officer-row[data-officer-id="${officerId}"]`);
                 if (officerRow) {
                     officerRow.classList.add('highlight');
                     officerRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
