@@ -183,10 +183,10 @@
         }
 
         /* Highlighting for search results */
-        .police-station.highlight {
-            box-shadow: 0 0 10px 5px #ffc107;
-            transform: scale(1.05);
-            background-color: #ffd700;
+        .police-station.highlight, .officer-row.highlight {
+            box-shadow: 0 0 10px 3px #ffc107;
+            background-color: #ffd700 !important;
+            transition: box-shadow 0.2s, background-color 0.2s;
         }
 
         .police-station::before {
@@ -312,6 +312,43 @@
             background-color: #eee;
         }
 
+        /* New styles for the officer details section */
+        #officer-details-container {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #officer-details-container h2 {
+            text-align: center;
+            color: #333;
+            border-bottom: 2px solid #ccc;
+            padding-bottom: 10px;
+        }
+
+        #officer-details-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        #officer-details-table th, #officer-details-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        #officer-details-table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        
+        #officer-details-table tr:hover {
+            background-color: #f9f9f9;
+        }
+
         /* === MOBILE-FRIENDLY STYLES === */
         @media (max-width: 768px) {
             body {
@@ -364,6 +401,12 @@
             .bottom-legend {
                 text-align: left;
             }
+            #officer-details-table {
+                font-size: 0.8em;
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
         }
     </style>
 </head>
@@ -392,76 +435,76 @@
             
             <div class="sub-division-group" data-subdivision="Tarn Taran">
                 <div class="police-station" data-code="Lima-20">
-                    <span class="ps-name">Police Station<br><span class="station-name-text">City TTN</span></span><br>
+                    <span class="ps-name">Police Station<br><span class="station-name-text" data-name="City TTN">City TTN</span></span><br>
                     <span class="ps-code">Lima-20</span>
                 </div>
                 <div class="police-station" data-code="Lima-22">
-                    <span class="ps-name">Police Station<br><span class="station-name-text">Jhabal</span></span><br>
+                    <span class="ps-name">Police Station<br><span class="station-name-text" data-name="Jhabal">Jhabal</span></span><br>
                     <span class="ps-code">Lima-22</span>
                 </div>
                 <div class="police-station" data-code="Lima-23">
-                    <span class="ps-name">Police Station<br><span class="station-name-text">S.A Khan</span></span><br>
+                    <span class="ps-name">Police Station<br><span class="station-name-text" data-name="S.A Khan">S.A Khan</span></span><br>
                     <span class="ps-code">Lima-23</span>
                 </div>
                 <div class="police-station" data-code="Lima-34">
-                    <span class="ps-name">Police Station<br><span class="station-name-text">Verowal</span></span><br>  
+                    <span class="ps-name">Police Station<br><span class="station-name-text" data-name="Verowal">Verowal</span></span><br>  
                     <span class="ps-code">Lima-34</span>
                 </div>
             </div>
 
             <div class="sub-division-group" data-subdivision="Goindwal Sahib">
                 <div class="police-station" data-code="Lima-33">
-                    <span class="ps-name">Police Station<br><span class="station-name-text">Goindwal Sahib</span></span><br>
+                    <span class="ps-name">Police Station<br><span class="station-name-text" data-name="Goindwal Sahib">Goindwal Sahib</span></span><br>
                     <span class="ps-code">Lima-33</span>
                 </div>
                 <div class="police-station" data-code="Lima-21">
-                    <span class="ps-name">Police Station<br><span class="station-name-text">Sadar TTN</span></span><br>
+                    <span class="ps-name">Police Station<br><span class="station-name-text" data-name="Sadar TTN">Sadar TTN</span></span><br>
                     <span class="ps-code">Lima-21</span>
                 </div>
                 <div class="police-station" data-code="Lima-32">
-                    <span class="ps-name">Police Station<br><span class="station-name-text">Chola Sahib</span></span><br>
+                    <span class="ps-name">Police Station<br><span class="station-name-text" data-name="Chola Sahib">Chola Sahib</span></span><br>
                     <span class="ps-code">Lima-32</span>
                 </div>
             </div>
 
             <div class="sub-division-group" data-subdivision="Patti">
                 <div class="police-station" data-code="Lima-28">
-                    <span class="ps-name">Police Station<br><span class="station-name-text">City Patti</span></span><br>
+                    <span class="ps-name">Police Station<br><span class="station-name-text" data-name="City Patti">City Patti</span></span><br>
                     <span class="ps-code">Lima-28</span>
                 </div>
                 <div class="police-station" data-code="Lima-29">
-                    <span class="ps-name">Police Station<br><span class="station-name-text">Sadar Patti</span></span><br>
+                    <span class="ps-name">Police Station<br><span class="station-name-text" data-name="Sadar Patti">Sadar Patti</span></span><br>
                     <span class="ps-code">Lima-29</span>
                 </div>
                 <div class="police-station" data-code="Lima-30">
-                    <span class="ps-name">Police Station<br><span class="station-name-text">Sarhali</span></span><br>
+                    <span class="ps-name">Police Station<br><span class="station-name-text" data-name="Sarhali">Sarhali</span></span><br>
                     <span class="ps-code">Lima-30</span>
                 </div>
                 <div class="police-station" data-code="Lima-31-alt">
-                    <span class="ps-name">Police Station<br><span class="station-name-text">Harike</span></span><br>
+                    <span class="ps-name">Police Station<br><span class="station-name-text" data-name="Harike">Harike</span></span><br>
                     <span class="ps-code">Lima-31</span>
                 </div>
             </div>
 
             <div class="sub-division-group" data-subdivision="Bhikhiwind">
                 <div class="police-station" data-code="Lima-25">
-                    <span class="ps-name">Police Station<br><span class="station-name-text">Bhikhiwind</span></span><br>
+                    <span class="ps-name">Police Station<br><span class="station-name-text" data-name="Bhikhiwind">Bhikhiwind</span></span><br>
                     <span class="ps-code">Lima-25</span>
                 </div>
                 <div class="police-station" data-code="Lima-26">
-                    <span class="ps-name">Police Station<br><span class="station-name-text">Valtoha</span></span><br>
+                    <span class="ps-name">Police Station<br><span class="station-name-text" data-name="Valtoha">Valtoha</span></span><br>
                     <span class="ps-code">Lima-26</span>
                 </div>
                 <div class="police-station" data-code="Lima-24">
-                    <span class="ps-name">Police Station<br><span class="station-name-text">Khalra</span></span><br>
+                    <span class="ps-name">Police Station<br><span class="station-name-text" data-name="Khalra">Khalra</span></span><br>
                     <span class="ps-code">Lima-24</span>
                 </div>
                 <div class="police-station" data-code="Lima-27">
-                    <span class="ps-name">Police Station<br><span class="station-name-text">Khemkaran</span></span><br>
+                    <span class="ps-name">Police Station<br><span class="station-name-text" data-name="Khemkaran">Khemkaran</span></span><br>
                     <span class="ps-code">Lima-27</span>
                 </div>
                 <div class="police-station" data-code="Lima-35">
-                    <span class="ps-name">Police Station<br><span class="station-name-text">Kacha Packka</span></span><br>
+                    <span class="ps-name">Police Station<br><span class="station-name-text" data-name="Kacha Packka">Kacha Packka</span></span><br>
                     <span class="ps-code">Lima-35</span>
                 </div>
             </div>
@@ -482,7 +525,11 @@
                 <span class="legend-box red"></span>RRPRS Vehicle : 28
             </div>
         </div>
-
+    </div>
+    
+    <div id="officer-details-container" class="chart-container">
+        <h2 class="sub-heading">Officer List and Details</h2>
+        <div id="officer-details-table-container"></div>
     </div>
 
     <div id="detailsModal" class="modal">
@@ -497,70 +544,42 @@
     </div>
 
     <script>
-        const officerData = {
-            "City TTN": [
-                { "Name of Officer": "Sh. Harmanbir Singh", "Designation": "IP DIG/FZR Range", "Office/Residence": "01632-244038, 01632-245230", "Mobile Number": "94170-11111", "Reader Name": "ASI Nirmal Singh", "Reader Mobile Number": "85588-50541" },
-                { "Name of Officer": "Sh. Deepak Pareek IPS", "Designation": "SSP Tarn Taran", "Office/Residence": "01852-289100, 01852-20200", "Mobile Number": "88607-23732, 77197-16367", "Reader Name": "SI Bhupinder Singh, ASI Gurwinder Singh", "Reader Mobile Number": "99152-09873, 95018-00994" }
-            ],
-            "Jhabal": [
-                { "Name of Officer": "Sh. Baljit Singh", "Designation": "SP/HQ", "Office/Residence": "01852-289100", "Mobile Number": "98152-01972", "Reader Name": "ASI Sukhchain Singh", "Reader Mobile Number": "84370-15040" },
-                { "Name of Officer": "Sh. Ajayraj Singh", "Designation": "SP/INV", "Office/Residence": "01852-289100", "Mobile Number": "99147-26789", "Reader Name": "ASI Manpreet Singh", "Reader Mobile Number": "98783-80200" }
-            ],
-            "S.A Khan": [
-                { "Name of Officer": "Sh. Kamaljit Singh", "Designation": "DSP/HQ/TTN", "Office/Residence": "01852-289100", "Mobile Number": "98881-46346, 77197-16110", "Reader Name": "LR/ASI Gurdev Singh", "Reader Mobile Number": "77197-28358" },
-                { "Name of Officer": "Sh Grinderpal Singh", "Designation": "DSP INV (D)", "Office/Residence": "01852-222384", "Mobile Number": "92563-99999", "Reader Name": "S/CI. Gurrbinder Singh", "Reader Mobile Number": "98144-55557" }
-            ],
-            "Verowal": [
-                { "Name of Officer": "Sh.Harpreet Singh", "Designation": "DSP", "Office/Residence": "", "Mobile Number": "79732-17884", "Reader Name": "", "Reader Mobile Number": "" }
-            ],
-            "Goindwal Sahib": [
-                { "Name of Officer": "Sh. Gulzar Singh", "Designation": "DSP PBI Eco. Off. & Cyber Crime", "Office/Residence": "", "Mobile Number": "97800-86060", "Reader Name": "LR/ASI Daljit Singh", "Reader Mobile Number": "98145-33186" },
-                { "Name of Officer": "Sh. Rashpal Singh", "Designation": "DSP PBI/Spl Crime", "Office/Residence": "", "Mobile Number": "98552-67144", "Reader Name": "LR/ASI Baljit Singh", "Reader Mobile Number": "89688-12909" }
-            ],
-            "Patti": [
-                { "Name of Officer": "Sh. Gurwinder Singh", "Designation": "DSP PBI Homicide & Children", "Office/Residence": "", "Mobile Number": "99144-68899", "Reader Name": "S/CI Jagdeep Singh", "Reader Mobile Number": "97795-51577" },
-                { "Name of Officer": "Sh. Riputapan Singh", "Designation": "DSP PBI CAW & Children", "Office/Residence": "01852-226800", "Mobile Number": "97805-01317", "Reader Name": "ASI Kanwardeep Singh", "Reader Mobile Number": "98769-16227" }
-            ],
-            "Bhikhiwind": [
-                { "Name of Officer": "Sh. Atul Soni", "Designation": "DSP (SD) Goindwal", "Office/Residence": "01859-222155", "Mobile Number": "81464-24061", "Reader Name": "HC Maninder Singh", "Reader Mobile Number": "87270-30007" },
-                { "Name of Officer": "Sh. Lovekesh", "Designation": "DSP (SD) Patti", "Office/Residence": "01851-244908", "Mobile Number": "96461-96099", "Reader Name": "S/CT.Jaspal Singh", "Reader Mobile Number": "97814-86406" },
-                { "Name of Officer": "Sh. Preetinder Singh", "Designation": "DSP (SD) Bhikhiwind", "Office/Residence": "01851-299105", "Mobile Number": "78418-00001", "Reader Name": "LR/ASI Gurdip Singh", "Reader Mobile Number": "62806-09541" },
-                { "Name of Officer": "Sh. Harinderjit Singh", "Designation": "DSP CID TTN", "Office/Residence": "01852-222411", "Mobile Number": "97800-03701", "Reader Name": "HC Sarabjit Singh", "Reader Mobile Number": "75082-75163" }
-            ],
-            "DPO Tarn Taran": [
-                { "Name of Officer": "Insp Sharanjit Singh", "Designation": "DSP Vigilence", "Office/Residence": "01852-229600", "Mobile Number": "98784-20140", "Reader Name": "", "Reader Mobile Number": "" },
-                { "Name of Officer": "Sh. Navtej Singh", "Designation": "DSP-C-1 TTN", "Office/Residence": "", "Mobile Number": "99882-22223", "Reader Name": "HC Varinder Singh", "Reader Mobile Number": "78891-82974" }
-            ],
-            "Supdt. Jail Goindwal Sahib": [
-                { "Name of Officer": "Sh. Varun sharma", "Designation": "Supdt. Jail Goindwal Sahib", "Office/Residence": "01859-223950", "Mobile Number": "78883-72490", "Reader Name": "OPR. 95016-04270", "Reader Mobile Number": "84274-90136, 98555-10734" }
-            ],
-            "Supdt. Sub Jail Patti": [
-                { "Name of Officer": "Sh. Jaswinder singh", "Designation": "Supdt. Sub Jail Patti", "Office/Residence": "01851-244567", "Mobile Number": "97796-38836", "Reader Name": "HC Sukhdev Singh", "Reader Mobile Number": "98155-25966" }
-            ]
-        };
+        const officerData = [
+            { "Name of Officer": "Sh. Harmanbir Singh", "Designation": "IP DIG/FZR Range", "Office/Residence": "01632-244038, 01632-245230", "Mobile Number": "94170-11111", "Reader Name": "ASI Nirmal Singh", "Reader Mobile Number": "85588-50541", "Police Station": "City TTN" },
+            { "Name of Officer": "Sh. Deepak Pareek IPS", "Designation": "SSP Tarn Taran", "Office/Residence": "01852-289100, 01852-20200", "Mobile Number": "88607-23732, 77197-16367", "Reader Name": "SI Bhupinder Singh, ASI Gurwinder Singh", "Reader Mobile Number": "99152-09873, 95018-00994", "Police Station": "City TTN" },
+            { "Name of Officer": "Sh. Baljit Singh", "Designation": "SP/HQ", "Office/Residence": "01852-289100", "Mobile Number": "98152-01972", "Reader Name": "ASI Sukhchain Singh", "Reader Mobile Number": "84370-15040", "Police Station": "Jhabal" },
+            { "Name of Officer": "Sh. Ajayraj Singh", "Designation": "SP/INV", "Office/Residence": "01852-289100", "Mobile Number": "99147-26789", "Reader Name": "ASI Manpreet Singh", "Reader Mobile Number": "98783-80200", "Police Station": "Jhabal" },
+            { "Name of Officer": "Sh. Kamaljit Singh", "Designation": "DSP/HQ/TTN", "Office/Residence": "01852-289100", "Mobile Number": "98881-46346, 77197-16110", "Reader Name": "LR/ASI Gurdev Singh", "Reader Mobile Number": "77197-28358", "Police Station": "S.A Khan" },
+            { "Name of Officer": "Sh Grinderpal Singh", "Designation": "DSP INV (D)", "Office/Residence": "01852-222384", "Mobile Number": "92563-99999", "Reader Name": "S/CI. Gurrbinder Singh", "Reader Mobile Number": "98144-55557", "Police Station": "S.A Khan" },
+            { "Name of Officer": "Sh.Harpreet Singh", "Designation": "DSP", "Office/Residence": "", "Mobile Number": "79732-17884", "Reader Name": "", "Reader Mobile Number": "", "Police Station": "Verowal" },
+            { "Name of Officer": "Sh. Gulzar Singh", "Designation": "DSP PBI Eco. Off. & Cyber Crime", "Office/Residence": "", "Mobile Number": "97800-86060", "Reader Name": "LR/ASI Daljit Singh", "Reader Mobile Number": "98145-33186", "Police Station": "Goindwal Sahib" },
+            { "Name of Officer": "Sh. Rashpal Singh", "Designation": "DSP PBI/Spl Crime", "Office/Residence": "", "Mobile Number": "98552-67144", "Reader Name": "LR/ASI Baljit Singh", "Reader Mobile Number": "89688-12909", "Police Station": "Goindwal Sahib" },
+            { "Name of Officer": "Sh. Gurwinder Singh", "Designation": "DSP PBI Homicide & Children", "Office/Residence": "", "Mobile Number": "99144-68899", "Reader Name": "S/CI Jagdeep Singh", "Reader Mobile Number": "97795-51577", "Police Station": "City Patti" },
+            { "Name of Officer": "Sh. Riputapan Singh", "Designation": "DSP PBI CAW & Children", "Office/Residence": "01852-226800", "Mobile Number": "97805-01317", "Reader Name": "ASI Kanwardeep Singh", "Reader Mobile Number": "98769-16227", "Police Station": "City Patti" },
+            { "Name of Officer": "Sh. Atul Soni", "Designation": "DSP (SD) Goindwal", "Office/Residence": "01859-222155", "Mobile Number": "81464-24061", "Reader Name": "HC Maninder Singh", "Reader Mobile Number": "87270-30007", "Police Station": "Goindwal Sahib" },
+            { "Name of Officer": "Sh. Lovekesh", "Designation": "DSP (SD) Patti", "Office/Residence": "01851-244908", "Mobile Number": "96461-96099", "Reader Name": "S/CT.Jaspal Singh", "Reader Mobile Number": "97814-86406", "Police Station": "Patti" },
+            { "Name of Officer": "Sh. Preetinder Singh", "Designation": "DSP (SD) Bhikhiwind", "Office/Residence": "01851-299105", "Mobile Number": "78418-00001", "Reader Name": "LR/ASI Gurdip Singh", "Reader Mobile Number": "62806-09541", "Police Station": "Bhikhiwind" },
+            { "Name of Officer": "Sh. Harinderjit Singh", "Designation": "DSP CID TTN", "Office/Residence": "01852-222411", "Mobile Number": "97800-03701", "Reader Name": "HC Sarabjit Singh", "Reader Mobile Number": "75082-75163", "Police Station": "Sadar Patti" },
+            { "Name of Officer": "Insp Sharanjit Singh", "Designation": "DSP Vigilence", "Office/Residence": "01852-229600", "Mobile Number": "98784-20140", "Reader Name": "", "Reader Mobile Number": "", "Police Station": "DPO Tarn Taran" },
+            { "Name of Officer": "Sh. Navtej Singh", "Designation": "DSP-C-1 TTN", "Office/Residence": "", "Mobile Number": "99882-22223", "Reader Name": "HC Varinder Singh", "Reader Mobile Number": "78891-82974", "Police Station": "DPO Tarn Taran" },
+            { "Name of Officer": "Sh. Varun sharma", "Designation": "Supdt. Jail Goindwal Sahib", "Office/Residence": "01859-223950", "Mobile Number": "78883-72490", "Reader Name": "OPR. 95016-04270", "Reader Mobile Number": "84274-90136, 98555-10734", "Police Station": "Goindwal Sahib" },
+            { "Name of Officer": "Sh. Jaswinder singh", "Designation": "Supdt. Sub Jail Patti", "Office/Residence": "01851-244567", "Mobile Number": "97796-38836", "Reader Name": "HC Sukhdev Singh", "Reader Mobile Number": "98155-25966", "Police Station": "Patti" }
+        ];
 
-        const officerStationMap = {
-            "Sh. Harmanbir Singh": "City TTN",
-            "Sh. Deepak Pareek IPS": "City TTN",
-            "Sh. Baljit Singh": "Jhabal",
-            "Sh. Ajayraj Singh": "Jhabal",
-            "Sh. Kamaljit Singh": "S.A Khan",
-            "Sh Grinderpal Singh": "S.A Khan",
-            "Sh.Harpreet Singh": "Verowal",
-            "Sh. Gulzar Singh": "Goindwal Sahib",
-            "Sh. Rashpal Singh": "Goindwal Sahib",
-            "Sh. Gurwinder Singh": "Patti",
-            "Sh. Riputapan Singh": "Patti",
-            "Sh. Atul Soni": "Bhikhiwind",
-            "Sh. Lovekesh": "Bhikhiwind",
-            "Sh. Preetinder Singh": "Bhikhiwind",
-            "Sh. Harinderjit Singh": "Bhikhiwind",
-            "Insp Sharanjit Singh": "DPO Tarn Taran",
-            "Sh. Navtej Singh": "DPO Tarn Taran",
-            "Sh. Varun sharma": "Supdt. Jail Goindwal Sahib",
-            "Sh. Jaswinder singh": "Supdt. Sub Jail Patti"
+        // This object maps the police station names to a simplified set of data.
+        // It's used for the main chart's click action to avoid showing a massive list.
+        const chartContactData = {
+            "City TTN": { "Officers": "Sh. Harmanbir Singh, Sh. Deepak Pareek IPS" },
+            "Jhabal": { "Officers": "Sh. Baljit Singh, Sh. Ajayraj Singh" },
+            "S.A Khan": { "Officers": "Sh. Kamaljit Singh, Sh Grinderpal Singh" },
+            "Verowal": { "Officers": "Sh.Harpreet Singh" },
+            "Goindwal Sahib": { "Officers": "Sh. Gulzar Singh, Sh. Rashpal Singh" },
+            "Patti": { "Officers": "Sh. Lovekesh, Sh. Jaswinder singh" },
+            "Bhikhiwind": { "Officers": "Sh. Preetinder Singh, Sh. Atul Soni" },
+            "Sadar Patti": { "Officers": "Sh. Harinderjit Singh" },
+            "DPO Tarn Taran": { "Officers": "Insp Sharanjit Singh, Sh. Navtej Singh" },
+            "Supdt. Jail Goindwal Sahib": { "Officers": "Sh. Varun sharma" }
         };
-
 
         const detailsModal = document.getElementById("detailsModal");
         const detailsModalTitle = document.getElementById("details-modal-title");
@@ -568,6 +587,34 @@
         const searchInput = document.getElementById('search-input');
         const autocompleteList = document.getElementById('autocomplete-list');
         const allPoliceStations = Array.from(document.querySelectorAll('.police-station'));
+
+        // Renders the new comprehensive officer details table
+        function renderOfficerTable() {
+            const container = document.getElementById('officer-details-table-container');
+            let tableHtml = '<table id="officer-details-table"><thead><tr>';
+            
+            // Generate table headers from the first officer object
+            const headers = Object.keys(officerData[0]);
+            headers.forEach(header => {
+                tableHtml += `<th>${header}</th>`;
+            });
+            tableHtml += '</tr></thead><tbody>';
+
+            // Generate table rows
+            officerData.forEach((officer, index) => {
+                tableHtml += `<tr class="officer-row" data-officer-name="${officer['Name of Officer']}">`;
+                headers.forEach(header => {
+                    tableHtml += `<td>${officer[header]}</td>`;
+                });
+                tableHtml += '</tr>';
+            });
+
+            tableHtml += '</tbody></table>';
+            container.innerHTML = tableHtml;
+        }
+
+        // Call the render function on page load
+        document.addEventListener('DOMContentLoaded', renderOfficerTable);
 
         // Toggle subdivision content
         function toggleSubdivision(subdivisionId) {
@@ -583,9 +630,21 @@
             const target = event.target.closest('.police-station');
             if (target) {
                 const stationName = target.querySelector('.station-name-text').textContent.trim();
-                showContactDetails(stationName);
+                showContactDetailsFromChart(stationName);
             }
         });
+
+        // Function to show simplified contact details from the chart
+        function showContactDetailsFromChart(stationName) {
+            const details = chartContactData[stationName];
+            if (details) {
+                detailsModalTitle.textContent = `Officers for ${stationName}`;
+                detailsContent.innerHTML = `<p><strong>Officers:</strong> ${details.Officers}</p>`;
+                openModal('detailsModal');
+            } else {
+                alert(`No contact details found for ${stationName}.`);
+            }
+        }
 
         function openModal(modalId) {
             const modalElement = document.getElementById(modalId);
@@ -608,27 +667,36 @@
             autocompleteList.innerHTML = '';
             
             if (searchTerm.length > 0) {
-                const officerResults = Object.keys(officerStationMap).filter(officerName =>
-                    officerName.toLowerCase().includes(searchTerm)
-                );
-                
-                const codeResults = allPoliceStations.filter(station =>
-                    station.dataset.code.toLowerCase().includes(searchTerm)
-                );
+                // Search both police stations and officers
+                const stationResults = allPoliceStations.filter(station => 
+                    station.dataset.code.toLowerCase().includes(searchTerm) || 
+                    station.querySelector('.station-name-text').textContent.toLowerCase().includes(searchTerm)
+                ).map(s => s.querySelector('.station-name-text').textContent.trim());
 
-                const results = new Set([...officerResults, ...codeResults.map(s => s.querySelector('.station-name-text').textContent.trim())]);
-                
-                if (results.size > 0) {
-                    results.forEach(result => {
+                const officerResults = officerData.filter(officer =>
+                    officer['Name of Officer'].toLowerCase().includes(searchTerm) ||
+                    officer['Designation'].toLowerCase().includes(searchTerm)
+                ).map(o => `${o['Name of Officer']} - ${o['Designation']}`);
+
+                const combinedResults = [...new Set([...stationResults, ...officerResults])];
+
+                if (combinedResults.length > 0) {
+                    combinedResults.forEach(result => {
                         const li = document.createElement('li');
                         li.textContent = result;
                         li.addEventListener('click', () => {
-                            let stationName = result;
-                            if (officerStationMap[result]) {
-                                stationName = officerStationMap[result];
+                            let stationName = '';
+                            let officerName = '';
+
+                            const matchedOfficer = officerData.find(o => `${o['Name of Officer']} - ${o['Designation']}` === result);
+                            if (matchedOfficer) {
+                                officerName = matchedOfficer['Name of Officer'];
+                                stationName = matchedOfficer['Police Station'];
+                            } else {
+                                stationName = result;
                             }
-                            highlightStation(stationName);
-                            showContactDetails(stationName);
+
+                            highlightItem(stationName, officerName);
                             searchInput.value = '';
                             autocompleteList.style.display = 'none';
                         });
@@ -650,7 +718,7 @@
             }
         });
 
-        function highlightStation(stationName) {
+        function highlightItem(stationName, officerName = '') {
             clearHighlights();
             const stationToHighlight = document.querySelector(`.police-station .station-name-text[data-name="${stationName}"]`).closest('.police-station');
             if (stationToHighlight) {
@@ -664,33 +732,21 @@
                 stationToHighlight.classList.add('highlight');
                 stationToHighlight.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
+
+            // Highlight the officer row if an officer was selected
+            if (officerName) {
+                const officerRow = document.querySelector(`.officer-row[data-officer-name="${officerName}"]`);
+                if (officerRow) {
+                    officerRow.classList.add('highlight');
+                    officerRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }
         }
 
         function clearHighlights() {
-            document.querySelectorAll('.police-station.highlight').forEach(station => {
-                station.classList.remove('highlight');
+            document.querySelectorAll('.highlight').forEach(item => {
+                item.classList.remove('highlight');
             });
-        }
-
-        function showContactDetails(stationName) {
-            const details = officerData[stationName];
-            if (details) {
-                detailsModalTitle.textContent = `Contact Details for ${stationName}`;
-                let tableHtml = '';
-                details.forEach(officer => {
-                    tableHtml += '<table><tbody>';
-                    for (const key in officer) {
-                        if (officer.hasOwnProperty(key)) {
-                            tableHtml += `<tr><td><strong>${key}</strong></td><td>${officer[key]}</td></tr>`;
-                        }
-                    }
-                    tableHtml += '</tbody></table><hr>';
-                });
-                detailsContent.innerHTML = tableHtml;
-                openModal('detailsModal');
-            } else {
-                alert(`No contact details found for ${stationName}.`);
-            }
         }
     </script>
 </body>
