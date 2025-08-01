@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Communication Network Chart of Distt. Tarn Taran</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .chart-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .main-heading {
+            text-align: center;
+            font-size: 2em;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        /* Search bar styles */
+        .search-container {
+            position: relative;
+            width: 100%;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 1em;
+        }
+
+        .autocomplete-list {
+            position: absolute;
+            z-index: 100;
+            width: 100%;
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            border-top: none;
+            background-color: white;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+        
+        .autocomplete-list li {
+            padding: 10px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+        }
+
+        .autocomplete-list li:hover {
+            background-color: #f0f0f0;
+        }
+
+        .control-room {
+            background-color: #a52a2a;
+            color: #fff;
+            padding: 15px;
+            border-radius: 25px;
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .control-room::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -20px;
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 20px solid #a52a2a;
+            transform: translateX(-50%);
+        }
+
+        .sub-divisions {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .sub-division {
+            background-color: #004d99;
+            color: #fff;
+            padding: 10px;
+            border-radius: 10px;
+            font-weight: bold;
+            flex-basis: 23%;
+            position: relative;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .sub-division:hover {
+            background-color: #003366;
+        }
+
+        .sub-division::after {
+            content: '+';
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        .sub-division.expanded::after {
+            content: '−';
+        }
+
+        .sub-division::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 20px solid #004d99;
+            transform: translateX(-50%);
+        }
+
+        .police-stations {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .sub-division-group {
+            flex-basis: 25%;
+            display: none; /* Hidden by default */
+            justify-content: center;
+            flex-wrap: wrap;
+            position: relative;
+        }
+        .sub-division-group.expanded {
+            display: flex;
+        }
+
+        .police-station {
+            background-color: #87ceeb;
+            color: #333;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            margin: 5px;
+            text-align: center;
+            flex-basis: 40%;
+            position: relative;
+            cursor: pointer;
+            transition: background-color 0.2s, box-shadow 0.2s;
+        }
+
+        .police-station:hover {
+            background-color: #61b3d8;
+        }
+
+        /* Highlighting for search results */
+        .police-station.highlight {
+            box-shadow: 0 0 10px 5px #ffc107;
+            transform: scale(1.05);
+            background-color: #ffd700;
+        }
+
+        .police-station::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 16px solid #004d99;
+            transform: translateX(-50%);
+        }
+        
+        .ps-code {
+            display: inline-block;
+            background-color: #004d99;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-size: 1em;
+            font-weight: normal;
+            margin-top: 5px;
+            font-family: monospace;
+        }
+        
+        .ps-name {
+            font-size: 1em;
+            color: #333;
+            font-weight: bold;
+        }
+        
+        .station-name-text {
+            color: #ff0000;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+
+        .bottom-legend {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #ccc;
+            text-align: right;
+            font-size: 0.9em;
+        }
+
+        .legend-item {
+            margin-bottom: 5px;
+        }
+
+        .legend-box {
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            border: 1px solid #000;
+            margin-right: 5px;
+            vertical-align: middle;
+        }
+
+        .legend-box.red { background-color: #ff4500; }
+        .legend-box.green { background-color: #3cb371; }
+        .legend-box.blue { background-color: #87ceeb; }
+        .legend-box.darkblue { background-color: #004d99; }
+        
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 101;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .close-button {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Styles for the new details modal */
+        #detailsModal .modal-content {
+            max-width: 600px;
+            text-align: left;
+        }
+        #detailsModal h2 {
+            text-align: center;
+        }
+        #detailsModal table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        #detailsModal th, #detailsModal td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+        #detailsModal th {
+            background-color: #eee;
+        }
+
+        /* === MOBILE-FRIENDLY STYLES === */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .main-heading {
+                font-size: 1.5em;
+            }
+
+            .search-container {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+
+            .sub-divisions {
+                flex-direction: column;
+                margin-bottom: 20px;
+            }
+
+            .sub-division {
+                width: 100%;
+                margin-bottom: 10px;
+                padding: 15px;
+            }
+
+            .police-stations {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .sub-division-group {
+                width: 100%;
+                margin-bottom: 20px;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .police-station {
+                width: 90%;
+                flex-basis: auto;
+                margin-bottom: 10px;
+            }
+
+            .modal-content {
+                width: 90%;
+                margin: 10% auto;
+            }
+
+            .bottom-legend {
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="chart-container">
+        <h1 class="main-heading">COMMUNICATION NETWORK CHART OF DISTT. TARN TARAN</h1>
+
+        <div class="search-container">
+            <input type="text" id="search-input" class="search-input" placeholder="Search police station by code...">
+            <ul id="autocomplete-list" class="autocomplete-list"></ul>
+        </div>
+        
+        <div class="control-room">
+            Control Room Tarn Taran<br>Romeo-3
+        </div>
+
+        <div class="sub-divisions" id="sub-divisions-container">
+            <div class="sub-division" onclick="toggleSubdivision('Tarn Taran')" data-subdivision="Tarn Taran">Sub Division Tarn Taran</div>
+            <div class="sub-division" onclick="toggleSubdivision('Goindwal Sahib')" data-subdivision="Goindwal Sahib">Sub Division Goindwal Sahib</div>
+            <div class="sub-division" onclick="toggleSubdivision('Patti')" data-subdivision="Patti">Sub Division Patti</div>
+            <div class="sub-division" onclick="toggleSubdivision('Bhikhiwind')" data-subdivision="Bhikhiwind">Sub Division Bhikhiwind</div>
+        </div>
+        
+        <div class="police-stations" id="police-stations-container">
+            
+            <div class="sub-division-group" data-subdivision="Tarn Taran">
+                <div class="police-station" data-code="Lima-20">
+                    <span class="ps-name">Police Station<br><span class="station-name-text">City TTN</span></span><br>
+                    <span class="ps-code">Lima-20</span>
+                </div>
+                <div class="police-station" data-code="Lima-22">
+                    <span class="ps-name">Police Station<br><span class="station-name-text">Jhabal</span></span><br>
+                    <span class="ps-code">Lima-22</span>
+                </div>
+                <div class="police-station" data-code="Lima-23">
+                    <span class="ps-name">Police Station<br><span class="station-name-text">S.A Khan</span></span><br>
+                    <span class="ps-code">Lima-23</span>
+                </div>
+                <div class="police-station" data-code="Lima-34">
+                    <span class="ps-name">Police Station<br><span class="station-name-text">Verowal</span></span><br>  
+                    <span class="ps-code">Lima-34</span>
+                </div>
+            </div>
+
+            <div class="sub-division-group" data-subdivision="Goindwal Sahib">
+                <div class="police-station" data-code="Lima-33">
+                    <span class="ps-name">Police Station<br><span class="station-name-text">Goindwal Sahib</span></span><br>
+                    <span class="ps-code">Lima-33</span>
+                </div>
+                <div class="police-station" data-code="Lima-21">
+                    <span class="ps-name">Police Station<br><span class="station-name-text">Sadar TTN</span></span><br>
+                    <span class="ps-code">Lima-21</span>
+                </div>
+                <div class="police-station" data-code="Lima-32">
+                    <span class="ps-name">Police Station<br><span class="station-name-text">Chola Sahib</span></span><br>
+                    <span class="ps-code">Lima-32</span>
+                </div>
+            </div>
+
+            <div class="sub-division-group" data-subdivision="Patti">
+                <div class="police-station" data-code="Lima-28">
+                    <span class="ps-name">Police Station<br><span class="station-name-text">City Patti</span></span><br>
+                    <span class="ps-code">Lima-28</span>
+                </div>
+                <div class="police-station" data-code="Lima-29">
+                    <span class="ps-name">Police Station<br><span class="station-name-text">Sadar Patti</span></span><br>
+                    <span class="ps-code">Lima-29</span>
+                </div>
+                <div class="police-station" data-code="Lima-30">
+                    <span class="ps-name">Police Station<br><span class="station-name-text">Sarhali</span></span><br>
+                    <span class="ps-code">Lima-30</span>
+                </div>
+                <div class="police-station" data-code="Lima-31-alt">
+                    <span class="ps-name">Police Station<br><span class="station-name-text">Harike</span></span><br>
+                    <span class="ps-code">Lima-31</span>
+                </div>
+            </div>
+
+            <div class="sub-division-group" data-subdivision="Bhikhiwind">
+                <div class="police-station" data-code="Lima-25">
+                    <span class="ps-name">Police Station<br><span class="station-name-text">Bhikhiwind</span></span><br>
+                    <span class="ps-code">Lima-25</span>
+                </div>
+                <div class="police-station" data-code="Lima-26">
+                    <span class="ps-name">Police Station<br><span class="station-name-text">Valtoha</span></span><br>
+                    <span class="ps-code">Lima-26</span>
+                </div>
+                <div class="police-station" data-code="Lima-24">
+                    <span class="ps-name">Police Station<br><span class="station-name-text">Khalra</span></span><br>
+                    <span class="ps-code">Lima-24</span>
+                </div>
+                <div class="police-station" data-code="Lima-27">
+                    <span class="ps-name">Police Station<br><span class="station-name-text">Khemkaran</span></span><br>
+                    <span class="ps-code">Lima-27</span>
+                </div>
+                <div class="police-station" data-code="Lima-35">
+                    <span class="ps-name">Police Station<br><span class="station-name-text">Kacha Packka</span></span><br>
+                    <span class="ps-code">Lima-35</span>
+                </div>
+            </div>
+            
+        </div>
+        
+        <div class="bottom-legend">
+            <div class="legend-item">
+                <span class="legend-box darkblue"></span>Sub Division : 4
+            </div>
+            <div class="legend-item">
+                <span class="legend-box blue"></span>Police Station : 16
+            </div>
+            <div class="legend-item">
+                <span class="legend-box green"></span>Police Post : 16
+            </div>
+            <div class="legend-item">
+                <span class="legend-box red"></span>RRPRS Vehicle : 28
+            </div>
+        </div>
+
+    </div>
+
+    <div id="detailsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('detailsModal')">&times;</span>
+            <h2 id="details-modal-title"></h2>
+            <div id="details-content"></div>
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="cancel" onclick="closeModal('detailsModal')">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const contactData = {
+            "City TTN": {
+                "Name of Officer": "SI Ranjit Singh",
+                "Office No": "01852-227200",
+                "Mobile Number": "94647-74040",
+                "MHC Name": "LR/ASI Gurpreet Singh",
+                "MHC Mobile Number": "84272-19900, 77197-16301"
+            },
+            "Jhabal": {
+                "Name of Officer": "Insp. Paramjit Singh",
+                "Office No": "01852-277221",
+                "Mobile Number": "98773-90622",
+                "MHC Name": "HC Gurdev Singh",
+                "MHC Mobile Number": "90824-60004, 77197-16302"
+            },
+            "S.A Khan": {
+                "Name of Officer": "SI Amrik Singh",
+                "Office No": "01852-272523",
+                "Mobile Number": "98762-96116",
+                "MHC Name": "S/CT Harkawal Singh",
+                "MHC Mobile Number": "99149-20070, 77197-16303"
+            },
+            "Verowal": {
+                "Name of Officer": "SI Naresh Kumar",
+                "Office No": "01859-279114",
+                "Mobile Number": "99157-77977",
+                "MHC Name": "S/CT Simarpreet Singh",
+                "MHC Mobile Number": "98722-33916, 77197-16304"
+            },
+            "Goindwal Sahib": {
+                "Name of Officer": "SI Balraj Singh",
+                "Office No": "01859-222216",
+                "Mobile Number": "97800-07231",
+                "MHC Name": "LR/ASI Gurmam Singh",
+                "MHC Mobile Number": "82838-01701, 77197-16305"
+            },
+            "Sadar TTN": {
+                "Name of Officer": "SI Avtar Singh",
+                "Office No": "01852-227300",
+                "Mobile Number": "84271-00097",
+                "MHC Name": "HC Malkiat Singh",
+                "MHC Mobile Number": "97798-29390, 77197-16306"
+            },
+            "Chola Sahib": {
+                "Name of Officer": "SI Baljinder Singh",
+                "Office No": "",
+                "Mobile Number": "98880-15612",
+                "MHC Name": "S/CT Amanjit Singh",
+                "MHC Mobile Number": "98780-07351, 77197-16307"
+            },
+            "City Patti": {
+                "Name of Officer": "INSP Kawaljit Rai",
+                "Office No": "01851-244939",
+                "Mobile Number": "98889-14414",
+                "MHC Name": "HC Amrinder Singh",
+                "MHC Mobile Number": "98150-09760, 77197-16308"
+            },
+            "Sadar Patti": {
+                "Name of Officer": "INSP Gurcharan Singh",
+                "Office No": "",
+                "Mobile Number": "95920-48900",
+                "MHC Name": "HC Harpreet Singh",
+                "MHC Mobile Number": "90716-13000, 77197-16309"
+            },
+            "Sarhali": {
+                "Name of Officer": "SI Gurinder Singh",
+                "Office No": "01852-240152",
+                "Mobile Number": "73472-83939",
+                "MHC Name": "HC Sukhwinder Singh",
+                "MHC Mobile Number": "81959-62000, 77197-16310"
+            },
+            "Harike": {
+                "Name of Officer": "Insp.Harpreet Singh",
+                "Office No": "01851-238352",
+                "Mobile Number": "95921-31900",
+                "MHC Name": "LR/ASI Dilbag Singh",
+                "MHC Mobile Number": "9878904378, 77197-16311"
+            },
+            "Bhikhiwind": {
+                "Name of Officer": "Insp Manoj Kumar",
+                "Office No": "01851-272024",
+                "Mobile Number": "85580-16710",
+                "MHC Name": "HC Sukhraj Singh",
+                "MHC Mobile Number": "98722-93995, 77197-16312"
+            },
+            "Valtoha": {
+                "Name of Officer": "SI.Gurmurkh Singh",
+                "Office No": "01851-224108",
+                "Mobile Number": "73070-85457",
+                "MHC Name": "HC Gurnaib Singh",
+                "MHC Mobile Number": "98144-88868, 77197-16313"
+            },
+            "Khemkaran": {
+                "Name of Officer": "SI.Balbir Singh",
+                "Office No": "01851-268626",
+                "Mobile Number": "97797-10006",
+                "MHC Name": "LR/ASI Avtar Singh",
+                "MHC Mobile Number": "98770-26360, 77197-16314"
+            },
+            "Khalra": {
+                "Name of Officer": "LR/INSP Ranjit Singh",
+                "Office No": "01851-277323",
+                "Mobile Number": "99154-00597",
+                "MHC Name": "S/CT Gurrbinder Singh",
+                "MHC Mobile Number": "98143-13044, 77197-16315"
+            },
+            "Kacha Packka": {
+                "Name of Officer": "SI Balraj Singh",
+                "Office No": "01851-250666",
+                "Mobile Number": "98726-80717",
+                "MHC Name": "HC Daljit Singh",
+                "MHC Mobile Number": "98883-96866, 77197-16316"
+            }
+        };
+
+        const detailsModal = document.getElementById("detailsModal");
+        const detailsModalTitle = document.getElementById("details-modal-title");
+        const detailsContent = document.getElementById("details-content");
+        const searchInput = document.getElementById('search-input');
+        const autocompleteList = document.getElementById('autocomplete-list');
+        const allPoliceStations = Array.from(document.querySelectorAll('.police-station'));
+
+        // Toggle subdivision content
+        function toggleSubdivision(subdivisionId) {
+            const subdivisionDiv = document.querySelector(`.sub-division[data-subdivision="${subdivisionId}"]`);
+            const groupDiv = document.querySelector(`.sub-division-group[data-subdivision="${subdivisionId}"]`);
+
+            // This is the core logic that is more reliable on all devices
+            subdivisionDiv.classList.toggle('expanded');
+            groupDiv.classList.toggle('expanded');
+        }
+        
+        // Event listener for clicking on police stations
+        document.getElementById('police-stations-container').addEventListener('click', (event) => {
+            const target = event.target.closest('.police-station');
+            if (target) {
+                const stationName = target.querySelector('.station-name-text').textContent.trim();
+                showContactDetails(stationName);
+            }
+        });
+
+        function openModal(modalId) {
+            const modalElement = document.getElementById(modalId);
+            modalElement.style.display = "block";
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == detailsModal) {
+                closeModal('detailsModal');
+            }
+        }
+
+        // Search functionality
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            autocompleteList.innerHTML = '';
+            
+            if (searchTerm.length > 0) {
+                const results = allPoliceStations.filter(station => 
+                    station.dataset.code.toLowerCase().includes(searchTerm)
+                );
+
+                if (results.length > 0) {
+                    results.forEach(station => {
+                        const li = document.createElement('li');
+                        li.textContent = `${station.querySelector('.ps-code').textContent} - ${station.querySelector('.station-name-text').textContent}`;
+                        li.addEventListener('click', () => {
+                            highlightStation(station.dataset.code);
+                            searchInput.value = '';
+                            autocompleteList.style.display = 'none';
+                        });
+                        autocompleteList.appendChild(li);
+                    });
+                    autocompleteList.style.display = 'block';
+                } else {
+                    autocompleteList.style.display = 'none';
+                }
+            } else {
+                autocompleteList.style.display = 'none';
+                clearHighlights();
+            }
+        });
+        
+        document.addEventListener('click', (e) => {
+            if (!searchInput.contains(e.target) && !autocompleteList.contains(e.target)) {
+                autocompleteList.style.display = 'none';
+            }
+        });
+
+        function highlightStation(code) {
+            clearHighlights();
+            const stationToHighlight = document.querySelector(`.police-station[data-code="${code}"]`);
+            if (stationToHighlight) {
+                const parentGroup = stationToHighlight.closest('.sub-division-group');
+                const subdivisionDiv = document.querySelector(`.sub-division[data-subdivision="${parentGroup.dataset.subdivision}"]`);
+                
+                // Ensure the parent group is expanded using the robust class-toggle
+                if (parentGroup && !parentGroup.classList.contains('expanded')) {
+                    subdivisionDiv.classList.add('expanded');
+                    parentGroup.classList.add('expanded');
+                }
+                stationToHighlight.classList.add('highlight');
+                stationToHighlight.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+
+        function clearHighlights() {
+            document.querySelectorAll('.police-station.highlight').forEach(station => {
+                station.classList.remove('highlight');
+            });
+        }
+
+        function showContactDetails(stationName) {
+            const details = contactData[stationName];
+            if (details) {
+                detailsModalTitle.textContent = `Contact Details for ${stationName}`;
+                let tableHtml = '<table><thead><tr><th>Category</th><th>Details</th></tr></thead><tbody>';
+                for (const key in details) {
+                    if (details.hasOwnProperty(key)) {
+                        tableHtml += `<tr><td><strong>${key}</strong></td><td>${details[key]}</td></tr>`;
+                    }
+                }
+                tableHtml += '</tbody></table>';
+                detailsContent.innerHTML = tableHtml;
+                openModal('detailsModal');
+            } else {
+                alert(`No contact details found for ${stationName}.`);
+            }
+        }
+    </script>
+</body>
+</html>
