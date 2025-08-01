@@ -20,6 +20,16 @@
             max-width: 1200px;
             margin: auto;
         }
+        
+        .logo-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo-container img {
+            max-width: 150px;
+            height: auto;
+        }
 
         .main-heading {
             text-align: center;
@@ -142,9 +152,9 @@
             left: 50%;
             width: 0;
             height: 0;
-            border-left: 10px solid transparent;
-            border-right: 10px solid transparent;
-            border-bottom: 20px solid #004d99;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 16px solid #004d99;
             transform: translateX(-50%);
         }
 
@@ -163,8 +173,7 @@
         .sub-division-group.expanded {
             display: flex;
         }
-
-        .police-station {
+        .police-station, .other-unit-box {
             background-color: #87ceeb;
             color: #333;
             padding: 10px;
@@ -177,19 +186,22 @@
             cursor: pointer;
             transition: background-color 0.2s, box-shadow 0.2s;
         }
+        .other-unit-box {
+            background-color: #add8e6;
+        }
 
-        .police-station:hover {
+        .police-station:hover, .other-unit-box:hover {
             background-color: #61b3d8;
         }
 
         /* Highlighting for search results */
-        .police-station.highlight, .officer-row.highlight {
+        .police-station.highlight, .officer-row.highlight, .other-unit-box.highlight {
             box-shadow: 0 0 10px 3px #ffc107;
             background-color: #ffd700 !important;
             transition: box-shadow 0.2s, background-color 0.2s;
         }
 
-        .police-station::before {
+        .police-station::before, .other-unit-box::before {
             content: '';
             position: absolute;
             top: -20px;
@@ -290,7 +302,7 @@
             cursor: pointer;
         }
 
-        /* Styles for the new details modal */
+        /* Styles for the details modal */
         #detailsModal .modal-content {
             max-width: 600px;
             text-align: left;
@@ -310,6 +322,9 @@
         }
         #detailsModal th {
             background-color: #eee;
+        }
+        .officer-table-in-modal tr td:first-child {
+            font-weight: bold;
         }
 
         /* New styles for the officer details section */
@@ -387,7 +402,7 @@
                 align-items: center;
             }
 
-            .police-station {
+            .police-station, .other-unit-box {
                 width: 90%;
                 flex-basis: auto;
                 margin-bottom: 10px;
@@ -413,6 +428,9 @@
 <body>
 
     <div class="chart-container">
+        <div class="logo-container">
+            <img src="uploaded:image.png-66c02acf-b3cf-4e3a-b8c6-a5699bbf0847" alt="Tarn Taran Police Logo">
+        </div>
         <h1 class="main-heading">COMMUNICATION NETWORK CHART OF DISTT. TARN TARAN</h1>
 
         <div class="search-container">
@@ -429,6 +447,8 @@
             <div class="sub-division" onclick="toggleSubdivision('Goindwal Sahib')" data-subdivision="Goindwal Sahib">Sub Division Goindwal Sahib</div>
             <div class="sub-division" onclick="toggleSubdivision('Patti')" data-subdivision="Patti">Sub Division Patti</div>
             <div class="sub-division" onclick="toggleSubdivision('Bhikhiwind')" data-subdivision="Bhikhiwind">Sub Division Bhikhiwind</div>
+            <div class="sub-division" onclick="toggleSubdivision('DPO & Units')" data-subdivision="DPO & Units">DPO & Units</div>
+            <div class="sub-division" onclick="toggleSubdivision('Police Posts')" data-subdivision="Police Posts">Police Posts</div>
         </div>
         
         <div class="police-stations" id="police-stations-container">
@@ -509,6 +529,60 @@
                 </div>
             </div>
             
+            <div class="sub-division-group" data-subdivision="DPO & Units">
+                <div class="other-unit-box" data-code="DPO">
+                    <span class="ps-name"><span class="station-name-text" data-name="DPO Tarn Taran">DPO Tarn Taran</span></span><br>
+                </div>
+                <div class="other-unit-box" data-code="CIA">
+                    <span class="ps-name"><span class="station-name-text" data-name="CIA TTN">CIA TTN</span></span><br>
+                </div>
+                 <div class="other-unit-box" data-code="Police Lines">
+                    <span class="ps-name"><span class="station-name-text" data-name="Police Lines">Police Lines</span></span><br>
+                </div>
+                <div class="other-unit-box" data-code="Cyber Crime">
+                    <span class="ps-name"><span class="station-name-text" data-name="Cyber Crime">Cyber Crime</span></span><br>
+                </div>
+            </div>
+
+            <div class="sub-division-group" data-subdivision="Police Posts">
+                <div class="other-unit-box" data-code="Town Tarn Taran">
+                    <span class="ps-name"><span class="station-name-text" data-name="Town Tarn Taran">Town Tarn Taran</span></span><br>
+                </div>
+                <div class="other-unit-box" data-code="Fatehabad">
+                    <span class="ps-name"><span class="station-name-text" data-name="Fatehabad">Fatehabad</span></span><br>
+                </div>
+                <div class="other-unit-box" data-code="Khadur Sahib">
+                    <span class="ps-name"><span class="station-name-text" data-name="Khadur Sahib">Khadur Sahib</span></span><br>
+                </div>
+                <div class="other-unit-box" data-code="Manochahal">
+                    <span class="ps-name"><span class="station-name-text" data-name="Manochahal">Manochahal</span></span><br>
+                </div>
+                <div class="other-unit-box" data-code="Kairon">
+                    <span class="ps-name"><span class="station-name-text" data-name="Kairon">Kairon</span></span><br>
+                </div>
+                <div class="other-unit-box" data-code="Ghariala">
+                    <span class="ps-name"><span class="station-name-text" data-name="Ghariala">Ghariala</span></span><br>
+                </div>
+                <div class="other-unit-box" data-code="Sabhrah">
+                    <span class="ps-name"><span class="station-name-text" data-name="Sabhrah">Sabhrah</span></span><br>
+                </div>
+                <div class="other-unit-box" data-code="Toot">
+                    <span class="ps-name"><span class="station-name-text" data-name="Toot">Toot</span></span><br>
+                </div>
+                <div class="other-unit-box" data-code="Naushera Pannuan">
+                    <span class="ps-name"><span class="station-name-text" data-name="Naushera Pannuan">Naushera Pannuan</span></span><br>
+                </div>
+                <div class="other-unit-box" data-code="Sur Singh">
+                    <span class="ps-name"><span class="station-name-text" data-name="Sur Singh">Sur Singh</span></span><br>
+                </div>
+                <div class="other-unit-box" data-code="Algon">
+                    <span class="ps-name"><span class="station-name-text" data-name="Algon">Algon</span></span><br>
+                </div>
+                <div class="other-unit-box" data-code="Rajoke">
+                    <span class="ps-name"><span class="station-name-text" data-name="Rajoke">Rajoke</span></span><br>
+                </div>
+            </div>
+
         </div>
         
         <div class="bottom-legend">
@@ -544,30 +618,19 @@
     </div>
 
     <script>
-        const chartContactData = {
-            "City TTN": { "Officers": "Sh. Harmanbir Singh, Sh. Deepak Pareek IPS" },
-            "Jhabal": { "Officers": "Sh. Baljit Singh, Sh. Ajayraj Singh" },
-            "S.A Khan": { "Officers": "Sh. Kamaljit Singh, Sh Grinderpal Singh" },
-            "Verowal": { "Officers": "Sh.Harpreet Singh" },
-            "Goindwal Sahib": { "Officers": "Sh. Gulzar Singh, Sh. Rashpal Singh, Sh. Varun sharma" },
-            "Patti": { "Officers": "Sh. Lovekesh, Sh. Jaswinder singh" },
-            "Bhikhiwind": { "Officers": "Sh. Preetinder Singh, Sh. Atul Soni" },
-            "Sadar Patti": { "Officers": "Sh. Harinderjit Singh" },
-            "DPO Tarn Taran": { "Officers": "Insp Sharanjit Singh, Sh. Navtej Singh" },
-        };
-        
         const officerData = [
             { "Name of Officer": "Sh. Harmanbir Singh", "Designation": "IP DIG/FZR Range", "Office/Residence": "01632-244038, 01632-245230", "Mobile Number": "94170-11111", "Reader Name": "ASI Nirmal Singh", "Reader Mobile Number": "85588-50541", "Police Station": "City TTN" },
-            { "Name of Officer": "Sh. Deepak Pareek IPS", "Designation": "SSP Tarn Taran", "Office/Residence": "01852-289100, 01852-20200", "Mobile Number": "88607-23732, 77197-16367", "Reader Name": "SI Bhupinder Singh, ASI Gurwinder Singh", "Reader Mobile Number": "99152-09873, 95018-00994", "Police Station": "City TTN" },
+            { "Name of Officer": "Sh. Deepak Pareek IPS", "Designation": "SSP Tarn Taran", "Office/Residence": "01852-289100, 87250-20200", "Mobile Number": "88607-23732, 77197-16367", "Reader Name": "SI Bhupinder Singh, ASI Gurwinder Singh", "Reader Mobile Number": "99152-00873, 95018-00994", "Police Station": "DPO Tarn Taran" },
             { "Name of Officer": "Sh. Baljit Singh", "Designation": "SP/HQ", "Office/Residence": "01852-289100", "Mobile Number": "98152-01972", "Reader Name": "ASI Sukhchain Singh", "Reader Mobile Number": "84370-15040", "Police Station": "Jhabal" },
             { "Name of Officer": "Sh. Ajayraj Singh", "Designation": "SP/INV", "Office/Residence": "01852-289100", "Mobile Number": "99147-26789", "Reader Name": "ASI Manpreet Singh", "Reader Mobile Number": "98783-80200", "Police Station": "Jhabal" },
+            { "Name of Officer": "SP/Sec&Tfc", "Designation": "SP/Sec&Tfc", "Office/Residence": "", "Mobile Number": "", "Reader Name": "", "Reader Mobile Number": "", "Police Station": "Sadar Patti" },
             { "Name of Officer": "Sh. Kamaljit Singh", "Designation": "DSP/HQ/TTN", "Office/Residence": "01852-289100", "Mobile Number": "98881-46346, 77197-16110", "Reader Name": "LR/ASI Gurdev Singh", "Reader Mobile Number": "77197-28358", "Police Station": "S.A Khan" },
-            { "Name of Officer": "Sh Grinderpal Singh", "Designation": "DSP INV (D)", "Office/Residence": "01852-222384", "Mobile Number": "92563-99999", "Reader Name": "S/CI. Gurrbinder Singh", "Reader Mobile Number": "98144-55557", "Police Station": "S.A Khan" },
+            { "Name of Officer": "Sh Grinderpal Singh", "Designation": "DSP/INV (D)", "Office/Residence": "01852-222384", "Mobile Number": "92563-99999", "Reader Name": "S/Ct. Gurbinder Singh", "Reader Mobile Number": "98144-55557", "Police Station": "S.A Khan" },
             { "Name of Officer": "Sh.Harpreet Singh", "Designation": "DSP", "Office/Residence": "", "Mobile Number": "79732-17884", "Reader Name": "", "Reader Mobile Number": "", "Police Station": "Verowal" },
-            { "Name of Officer": "Sh. Gulzar Singh", "Designation": "DSP PBI Eco. Off. & Cyber Crime", "Office/Residence": "", "Mobile Number": "97800-86060", "Reader Name": "LR/ASI Daljit Singh", "Reader Mobile Number": "98145-33186", "Police Station": "Goindwal Sahib" },
+            { "Name of Officer": "Sh. Gulzar Singh", "Designation": "DSP PBI Eco. Off. & Cyber Crime", "Office/Residence": "", "Mobile Number": "97800-06060", "Reader Name": "LR/ASI Daljit Singh", "Reader Mobile Number": "98145-33186", "Police Station": "Goindwal Sahib" },
             { "Name of Officer": "Sh. Rashpal Singh", "Designation": "DSP PBI/Spl Crime", "Office/Residence": "", "Mobile Number": "98552-67144", "Reader Name": "LR/ASI Baljit Singh", "Reader Mobile Number": "89688-12909", "Police Station": "Goindwal Sahib" },
-            { "Name of Officer": "Sh. Gurwinder Singh", "Designation": "DSP PBI Homicide & Children", "Office/Residence": "", "Mobile Number": "99144-68899", "Reader Name": "S/CI Jagdeep Singh", "Reader Mobile Number": "97795-51577", "Police Station": "City Patti" },
-            { "Name of Officer": "Sh. Riputapan Singh", "Designation": "DSP PBI CAW & Children", "Office/Residence": "01852-226800", "Mobile Number": "97805-01317", "Reader Name": "ASI Kanwardeep Singh", "Reader Mobile Number": "98769-16227", "Police Station": "City Patti" },
+            { "Name of Officer": "Sh. Gurwinder Singh", "Designation": "DSP PBI Homicide & Forensic", "Office/Residence": "", "Mobile Number": "99144-68899", "Reader Name": "S/Ct Jagdeep Singh", "Reader Mobile Number": "97795-51577", "Police Station": "City Patti" },
+            { "Name of Officer": "Sh. Riputapan Singh", "Designation": "DSP PBI CAW & Children", "Office/Residence": "01852-226800", "Mobile Number": "97805-01317", "Reader Name": "S/CT. Rajbir Singh, ASI Kanwardeep Singh", "Reader Mobile Number": "99156-00908, 98769-16227", "Police Station": "City Patti" },
             { "Name of Officer": "Sh. Atul Soni", "Designation": "DSP (SD) Goindwal", "Office/Residence": "01859-222155", "Mobile Number": "81464-24061", "Reader Name": "HC Maninder Singh", "Reader Mobile Number": "87270-30007", "Police Station": "Goindwal Sahib" },
             { "Name of Officer": "Sh. Lovekesh", "Designation": "DSP (SD) Patti", "Office/Residence": "01851-244908", "Mobile Number": "96461-96099", "Reader Name": "S/CT.Jaspal Singh", "Reader Mobile Number": "97814-86406", "Police Station": "Patti" },
             { "Name of Officer": "Sh. Preetinder Singh", "Designation": "DSP (SD) Bhikhiwind", "Office/Residence": "01851-299105", "Mobile Number": "78418-00001", "Reader Name": "LR/ASI Gurdip Singh", "Reader Mobile Number": "62806-09541", "Police Station": "Bhikhiwind" },
@@ -575,7 +638,74 @@
             { "Name of Officer": "Insp Sharanjit Singh", "Designation": "DSP Vigilence", "Office/Residence": "01852-229600", "Mobile Number": "98784-20140", "Reader Name": "", "Reader Mobile Number": "", "Police Station": "DPO Tarn Taran" },
             { "Name of Officer": "Sh. Navtej Singh", "Designation": "DSP-C-1 TTN", "Office/Residence": "", "Mobile Number": "99882-22223", "Reader Name": "HC Varinder Singh", "Reader Mobile Number": "78891-82974", "Police Station": "DPO Tarn Taran" },
             { "Name of Officer": "Sh. Varun sharma", "Designation": "Supdt. Jail Goindwal Sahib", "Office/Residence": "01859-223950", "Mobile Number": "78883-72490", "Reader Name": "OPR. 95016-04270", "Reader Mobile Number": "84274-90136, 98555-10734", "Police Station": "Goindwal Sahib" },
-            { "Name of Officer": "Sh. Jaswinder singh", "Designation": "Supdt. Sub Jail Patti", "Office/Residence": "01851-244567", "Mobile Number": "97796-38836", "Reader Name": "HC Sukhdev Singh", "Reader Mobile Number": "98155-25966", "Police Station": "Patti" }
+            { "Name of Officer": "Sh. Jaswinder singh", "Designation": "Supdt. Sub Jail Patti", "Office/Residence": "01851-244567", "Mobile Number": "97796-38836", "Reader Name": "HC Sukhdev Singh", "Reader Mobile Number": "98155-25966", "Police Station": "Patti" },
+            { "Name of Officer": "SI Ranjit Singh", "Designation": "", "Office/Residence": "01852-227200", "Mobile Number": "94647-74040", "Reader Name": "LR/ASI Gurpreet Singh", "Reader Mobile Number": "84272-19900, 77197-16301", "Police Station": "City TTN" },
+            { "Name of Officer": "Insp. Paramjit Singh", "Designation": "", "Office/Residence": "01852-277221", "Mobile Number": "98773-90622", "Reader Name": "HC Gurdev Singh", "Reader Mobile Number": "90824-60004, 77197-16302", "Police Station": "Jhabal" },
+            { "Name of Officer": "SI Amrik Singh", "Designation": "", "Office/Residence": "01852-272523", "Mobile Number": "98762-96116", "Reader Name": "S/CT Harkawal Singh", "Reader Mobile Number": "99149-20070, 77197-16303", "Police Station": "S.A Khan" },
+            { "Name of Officer": "SI Naresh Kumar", "Designation": "", "Office/Residence": "01859-279114", "Mobile Number": "99157-77977", "Reader Name": "S/CT Simarpreet Singh", "Reader Mobile Number": "98722-33916, 77197-16304", "Police Station": "Verowal" },
+            { "Name of Officer": "SI Balraj Singh", "Designation": "", "Office/Residence": "01859-222216", "Mobile Number": "97800-07231", "Reader Name": "LR/ASI Gurnam Singh", "Reader Mobile Number": "82838-01701, 77197-16305", "Police Station": "Goindwal Sahib" },
+            { "Name of Officer": "SI Avtar Singh", "Designation": "", "Office/Residence": "01852-227300", "Mobile Number": "84271-00097", "Reader Name": "HC Malkiat Singh", "Reader Mobile Number": "97798-29390, 77197-16306", "Police Station": "Sadar TTN" },
+            { "Name of Officer": "SI Baljinder Singh", "Designation": "", "Office/Residence": "", "Mobile Number": "98880-15612", "Reader Name": "S/CT Amanjit Singh", "Reader Mobile Number": "98780-07351, 77197-16307", "Police Station": "Chola Sahib" },
+            { "Name of Officer": "INSP Kawaljit Rai", "Designation": "", "Office/Residence": "01851-244939", "Mobile Number": "98889-14414", "Reader Name": "HC Amrinder Singh", "Reader Mobile Number": "98150-09760, 77197-16308", "Police Station": "City Patti" },
+            { "Name of Officer": "Insp Gurcharan Singh", "Designation": "", "Office/Residence": "", "Mobile Number": "95920-48900", "Reader Name": "HC Harpreet Singh", "Reader Mobile Number": "90716-13000, 77197-16309", "Police Station": "Sadar Patti" },
+            { "Name of Officer": "SI Gurinder Singh", "Designation": "", "Office/Residence": "01852-249152", "Mobile Number": "73472-83939", "Reader Name": "HC Sukhwinder Singh", "Reader Mobile Number": "81959-62000, 77197-16310", "Police Station": "Sarhali" },
+            { "Name of Officer": "Insp. Harpreet Singh", "Designation": "", "Office/Residence": "01851-238352", "Mobile Number": "95921-31900", "Reader Name": "LR/ASI Dilbag Singh", "Reader Mobile Number": "9878904378, 77197-16311", "Police Station": "Harike" },
+            { "Name of Officer": "Insp Manoj Kumar", "Designation": "", "Office/Residence": "01851-272024", "Mobile Number": "85580-16710", "Reader Name": "HC Sukhraj Singh", "Reader Mobile Number": "98722-93095,77197-16312", "Police Station": "Bhikhiwind" },
+            { "Name of Officer": "SI.Gurmukh Singh", "Designation": "", "Office/Residence": "01851-224108", "Mobile Number": "73070-85457", "Reader Name": "HC Gurnaib Singh", "Reader Mobile Number": "98144-88868, 77197-16313", "Police Station": "Valtoha" },
+            { "Name of Officer": "SI.Balbir Singh", "Designation": "", "Office/Residence": "01851-268626", "Mobile Number": "97797-10006", "Reader Name": "LR/ASI Avtar Singh", "Reader Mobile Number": "98770-26360, 77197-16314", "Police Station": "Khemkaran" },
+            { "Name of Officer": "LR/INSP Ranjit Singh", "Designation": "", "Office/Residence": "01851-277323", "Mobile Number": "99154-00597", "Reader Name": "S/CT Gurbinder Singh", "Reader Mobile Number": "98143-13044, 77197-16315", "Police Station": "Khalra" },
+            { "Name of Officer": "Si Balraj Singh", "Designation": "", "Office/Residence": "01851-250666", "Mobile Number": "98726-60717", "Reader Name": "HC Daljit Singh", "Reader Mobile Number": "98883-96866, 77197-16316", "Police Station": "Kacha Packka" },
+            { "Name of Officer": "INSP Sukhbir Kaur", "Designation": "Cyber Crime", "Office/Residence": "77197-16300", "Mobile Number": "87290-90630", "Reader Name": "Ct Bikramjit Singh", "Reader Mobile Number": "98555-51065", "Police Station": "Cyber Crime" },
+            { "Name of Officer": "Insp. Prabjit Singh", "Designation": "CIA TTN", "Office/Residence": "77197-16217", "Mobile Number": "95014-80065", "Reader Name": "S/CT.Manbir Singh", "Reader Mobile Number": "84271-78800,77197-16317", "Police Station": "CIA TTN" },
+            { "Name of Officer": "ASI Gurbhej Singh", "Designation": "P.O.Staff", "Office/Residence": "77197-16218", "Mobile Number": "94179-28399", "Reader Name": "Ct. Desa Singh", "Reader Mobile Number": "73407-30077", "Police Station": "DPO/Police Lines" },
+            { "Name of Officer": "ASI. Lakhbir Kaur", "Designation": "Women Help Deks", "Office/Residence": "88726-58900", "Mobile Number": "", "Reader Name": "", "Reader Mobile Number": "", "Police Station": "DPO/Police Lines" },
+            { "Name of Officer": "ASI Harjinder Singh", "Designation": "Traffic", "Office/Residence": "77197-16223", "Mobile Number": "99155-16600", "Reader Name": "LR/ASI Malkiat Singfh", "Reader Mobile Number": "84275-94900", "Police Station": "Traffic" },
+            { "Name of Officer": "ASI Davinder Singh", "Designation": "Μ.Τ.Ο.", "Office/Residence": "", "Mobile Number": "97792-11811", "Reader Name": "S/CT Randip Singh", "Reader Mobile Number": "98031-62027", "Police Station": "DPO/Police Lines" },
+            { "Name of Officer": "Insp Abhinav Chauhan", "Designation": "RI Police Line", "Office/Residence": "", "Mobile Number": "90410-18263", "Reader Name": "HC. Malkiat Singh", "Reader Mobile Number": "98152-24207", "Police Station": "DPO/Police Lines" },
+            { "Name of Officer": "SI Harjit Singh", "Designation": "LO Police Line", "Office/Residence": "", "Mobile Number": "83601-15874", "Reader Name": "LR/ASI Malkait Singh", "Reader Mobile Number": "98152-24207", "Police Station": "DPO/Police Lines" },
+            { "Name of Officer": "SI Raj Kumar", "Designation": "Police Control Room", "Office/Residence": "77197-16100", "Mobile Number": "79860-92926", "Reader Name": "CT.Kamalpreet Kaur", "Reader Mobile Number": "97800-46999", "Police Station": "DPO/Police Lines" },
+            { "Name of Officer": "ASI Baldev Singh", "Designation": "PCR City", "Office/Residence": "77197-16221", "Mobile Number": "98763-35635", "Reader Name": "S/CT. Rajwant Kaur", "Reader Mobile Number": "84371-99467", "Police Station": "DPO/Police Lines" },
+            { "Name of Officer": "Insp Kashmir Singh", "Designation": "I/C NCC", "Office/Residence": "", "Mobile Number": "98553-11336", "Reader Name": "ASI Rashpal Singh", "Reader Mobile Number": "95010-95081", "Police Station": "DPO/Police Lines" },
+            { "Name of Officer": "Insp Harwinder Kaur", "Designation": "Head Clerk/Sec/FIU", "Office/Residence": "01852-289119", "Mobile Number": "98550-25460", "Reader Name": "Insp Manjinder Singh", "Reader Mobile Number": "94642-61655", "Police Station": "DPO/Police Lines" },
+            { "Name of Officer": "ASI. Vipan Kumar", "Designation": "CRC", "Office/Residence": "01852-289126", "Mobile Number": "99150-26923", "Reader Name": "S/CT Karanbir Singh", "Reader Mobile Number": "82838-38227", "Police Station": "DPO/Police Lines" },
+            { "Name of Officer": "ASI. Rakesh Kumar", "Designation": "AC-3", "Office/Residence": "01852-289126", "Mobile Number": "98726-34815", "Reader Name": "Buta Singh", "Reader Mobile Number": "86998-71396", "Police Station": "DPO/Police Lines" },
+            { "Name of Officer": "ASI Pargat Singh", "Designation": "CDI", "Office/Residence": "", "Mobile Number": "84274-11881", "Reader Name": "", "Reader Mobile Number": "", "Police Station": "DPO/Police Lines" },
+            { "Name of Officer": "ASI Love Dhawan", "Designation": "Steno", "Office/Residence": "", "Mobile Number": "98553-23630", "Reader Name": "", "Reader Mobile Number": "", "Police Station": "DPO/Police Lines" },
+            { "Name of Officer": "SI Kulwant Singh", "Designation": "Accountant 77197-16226", "Office/Residence": "01852-289120", "Mobile Number": "97792-09642", "Reader Name": "Cashier", "Reader Mobile Number": "", "Police Station": "DPO/Police Lines" },
+            { "Name of Officer": "LR/ASI Joginder Singh", "Designation": "OASI", "Office/Residence": "77197-16220, 01852-289124", "Mobile Number": "98726-12674", "Reader Name": "LR/ASI Gurjant Singh", "Reader Mobile Number": "94640-24147", "Police Station": "DPO/Police Lines" },
+            { "Name of Officer": "HC Ranjit Singh", "Designation": "I/C SEC", "Office/Residence": "01852-289121", "Mobile Number": "79866-70919", "Reader Name": "LR/ASI Kuldeep Singh", "Reader Mobile Number": "97797-22400", "Police Station": "DPO/Police Lines" },
+            { "Name of Officer": "HC. Manjinder Singh", "Designation": "I/C SPL/BR SPL/BR", "Office/Residence": "77197-16229", "Mobile Number": "94632-25028", "Reader Name": "ASI Parveen Kumar", "Reader Mobile Number": "99151-62300", "Police Station": "DPO/Police Lines" },
+            { "Name of Officer": "Ct. Sarbjit Singh", "Designation": "I/C SPL/BR SPL/BR", "Office/Residence": "", "Mobile Number": "95555-04747", "Reader Name": "GO Mess", "Reader Mobile Number": "", "Police Station": "DPO/Police Lines" },
+            { "Name of Officer": "SI.Manjit Singh", "Designation": "I/C Litigation", "Office/Residence": "01852-289127", "Mobile Number": "84276-63763", "Reader Name": "ASI Gurmej Singh", "Reader Mobile Number": "", "Police Station": "DPO/Police Lines" },
+            { "Name of Officer": "L/CT.Dvinder Kaur", "Designation": "PSHRC", "Office/Residence": "", "Mobile Number": "99150-87502", "Reader Name": "SI. Balwinder Singh", "Reader Mobile Number": "70096-52022", "Police Station": "DPO/Police Lines" },
+            { "Name of Officer": "SI Amandeep Kaur", "Designation": "I/C PC/BR", "Office/Residence": "77197-16368, 01852-289125", "Mobile Number": "98722-97050", "Reader Name": "LR/ASI Sanjiv Kumar", "Reader Mobile Number": "97797-00604", "Police Station": "DPO/Police Lines" },
+            { "Name of Officer": "ASI. Satnam Singh", "Designation": "I/C Civel suit, I/C PSHRC", "Office/Residence": "", "Mobile Number": "98760-85313", "Reader Name": "ASI Jaspal Singh", "Reader Mobile Number": "98722-07955", "Police Station": "DPO/Police Lines" },
+            { "Name of Officer": "LR/ASI Sawinder Singh", "Designation": "I/C RW", "Office/Residence": "01852-289128", "Mobile Number": "98552-22530", "Reader Name": "HC Kuldip Singh", "Reader Mobile Number": "98157-22355", "Police Station": "DPO/Police Lines" },
+            { "Name of Officer": "Ct Sartaj Singh", "Designation": "NIC (RW BR) 77197-16230", "Office/Residence": "", "Mobile Number": "96538-57599", "Reader Name": "ASI. Sarbjit Singh", "Reader Mobile Number": "75298-96000", "Police Station": "DPO/Police Lines" },
+            { "Name of Officer": "LR/ASI Sarabjeet Kaur", "Designation": "I/C VRK/BR", "Office/Residence": "", "Mobile Number": "79866-09187", "Reader Name": "ASI. Hansa Singh", "Reader Mobile Number": "98763-17547", "Police Station": "DPO/Police Lines" },
+            { "Name of Officer": "ASI Gurjant Singh", "Designation": "I/C Election Cell", "Office/Residence": "01852-289129", "Mobile Number": "99152-99322", "Reader Name": "LR/ASI Gurjant Singh", "Reader Mobile Number": "94640-24147", "Police Station": "DPO/Police Lines" },
+            { "Name of Officer": "ASI Randhir Singh", "Designation": "I/C CCTNS", "Office/Residence": "", "Mobile Number": "98789-41149", "Reader Name": "LR/SI Jagtar Singh", "Reader Mobile Number": "99556-10330", "Police Station": "DPO/Police Lines" },
+            { "Name of Officer": "CT Baljit Kaur", "Designation": "Central Dairy", "Office/Residence": "N 9417431232", "Mobile Number": "95011-05287", "Reader Name": "HC Balraj Singh", "Reader Mobile Number": "83603-26033", "Police Station": "DPO/Police Lines" },
+            { "Name of Officer": "ASI.Manjinder Singh", "Designation": "I/C CRO", "Office/Residence": "", "Mobile Number": "97797-99500", "Reader Name": "", "Reader Mobile Number": "", "Police Station": "DPO/Police Lines" },
+            { "Name of Officer": "SI Satnam Singh", "Designation": "I/C RTI", "Office/Residence": "", "Mobile Number": "98889-21104", "Reader Name": "", "Reader Mobile Number": "", "Police Station": "DPO/Police Lines" },
+            { "Name of Officer": "ASI Ranbir Singh", "Designation": "I/C Cyber INV. & Technical cell I/C SocialMedia77197-16101", "Office/Residence": "97800-07946", "Mobile Number": "97800-05361, 98775-38041", "Reader Name": "Dr Bachittar Singh, ASI. Palwinder Singh", "Reader Mobile Number": "99158-62525, 98151-21329", "Police Station": "DPO/Police Lines" },
+            { "Name of Officer": "ASI Tajinder Singh", "Designation": "I/C DSK Passport Head", "Office/Residence": "01852-289122", "Mobile Number": "99150-82222, 95011-06298", "Reader Name": "", "Reader Mobile Number": "", "Police Station": "DPO/Police Lines" },
+            { "Name of Officer": "ASI Dilbagh Singh", "Designation": "PCC FRO", "Office/Residence": "", "Mobile Number": "99151-11577, 82880-02132", "Reader Name": "", "Reader Mobile Number": "", "Police Station": "DPO/Police Lines" },
+            { "Name of Officer": "HC. Deshpartap Singh", "Designation": "Arms Head", "Office/Residence": "01852-289117", "Mobile Number": "99151-54510", "Reader Name": "S/Ct. Satwinder Singh", "Reader Mobile Number": "99148-06751", "Police Station": "DPO/Police Lines" },
+            { "Name of Officer": "ASI Bikramjit Singh", "Designation": "Finacial investigation unit Finacial officer", "Office/Residence": "01852-289117", "Mobile Number": "81461-35553, 98885-82244", "Reader Name": "Anita", "Reader Mobile Number": "78886-84917", "Police Station": "DPO/Police Lines" },
+            { "Name of Officer": "Satnam Singh", "Designation": "PSO TO SSP Sa", "Office/Residence": "", "Mobile Number": "98140-05867", "Reader Name": "", "Reader Mobile Number": "", "Police Station": "DPO Tarn Taran" },
+            { "Name of Officer": "LR/SI Gurwinder Singh", "Designation": "", "Office/Residence": "77197-16231", "Mobile Number": "88476-24675", "Reader Name": "", "Reader Mobile Number": "", "Police Station": "Town Tarn Taran" },
+            { "Name of Officer": "ASI Gurpal Singh", "Designation": "", "Office/Residence": "77197-16238", "Mobile Number": "94642-25282", "Reader Name": "", "Reader Mobile Number": "", "Police Station": "Fatehabad" },
+            { "Name of Officer": "ASI Lakhwinder Singh", "Designation": "", "Office/Residence": "77197-16237", "Mobile Number": "97799-62700", "Reader Name": "", "Reader Mobile Number": "", "Police Station": "Khadur Sahib" },
+            { "Name of Officer": "LR/SI Dilbag Singh", "Designation": "", "Office/Residence": "77197-16234", "Mobile Number": "98760-19141", "Reader Name": "", "Reader Mobile Number": "", "Police Station": "Manochahal" },
+            { "Name of Officer": "ASI Balbir Singh", "Designation": "", "Office/Residence": "77197-16240", "Mobile Number": "97804-52924", "Reader Name": "", "Reader Mobile Number": "", "Police Station": "Kairon" },
+            { "Name of Officer": "ASI Harwinderpal Singh", "Designation": "", "Office/Residence": "77197-16239", "Mobile Number": "81980-21111", "Reader Name": "", "Reader Mobile Number": "", "Police Station": "Ghariala" },
+            { "Name of Officer": "ASI Nirmal Singh", "Designation": "", "Office/Residence": "77197-16241", "Mobile Number": "98552-02971", "Reader Name": "", "Reader Mobile Number": "", "Police Station": "Sabhrah" },
+            { "Name of Officer": "ASI Gurmeet Singh", "Designation": "", "Office/Residence": "77197-16242", "Mobile Number": "94632-23232", "Reader Name": "", "Reader Mobile Number": "", "Police Station": "Toot" },
+            { "Name of Officer": "LR/SI Balwinder Singh", "Designation": "", "Office/Residence": "77197-16243", "Mobile Number": "95014-99300", "Reader Name": "", "Reader Mobile Number": "", "Police Station": "Naushera Pannuan" },
+            { "Name of Officer": "SI Mandeep Kaur", "Designation": "", "Office/Residence": "77197-16245", "Mobile Number": "85668-09026", "Reader Name": "", "Reader Mobile Number": "", "Police Station": "Sur Singh" },
+            { "Name of Officer": "ASI Amarjit Singh", "Designation": "", "Office/Residence": "77197-16247", "Mobile Number": "62809-83173", "Reader Name": "", "Reader Mobile Number": "", "Police Station": "Algon" },
+            { "Name of Officer": "LR/SI Lakhbir Singh", "Designation": "", "Office/Residence": "77197-16244", "Mobile Number": "85261-60006", "Reader Name": "", "Reader Mobile Number": "", "Police Station": "Rajoke" }
         ];
 
         const detailsModal = document.getElementById("detailsModal");
@@ -584,6 +714,7 @@
         const searchInput = document.getElementById('search-input');
         const autocompleteList = document.getElementById('autocomplete-list');
         const allPoliceStations = Array.from(document.querySelectorAll('.police-station'));
+        const allOtherUnits = Array.from(document.querySelectorAll('.other-unit-box'));
 
         // Renders the new comprehensive officer details table
         function renderOfficerTable() {
@@ -622,25 +753,37 @@
             groupDiv.classList.toggle('expanded');
         }
         
-        // Event listener for clicking on police stations
+        // Event listener for clicking on police stations and other units
         document.getElementById('police-stations-container').addEventListener('click', (event) => {
-            const target = event.target.closest('.police-station');
+            const target = event.target.closest('.police-station') || event.target.closest('.other-unit-box');
             if (target) {
                 const stationName = target.querySelector('.station-name-text').textContent.trim();
-                showContactDetailsFromChart(stationName);
+                showFullDetailsInModal(stationName);
             }
         });
 
-        // Function to show simplified contact details from the chart
-        function showContactDetailsFromChart(stationName) {
-            const details = chartContactData[stationName];
-            if (details) {
+        function showFullDetailsInModal(stationName) {
+            const officersForStation = officerData.filter(o => o['Police Station'] === stationName);
+
+            if (officersForStation.length > 0) {
                 detailsModalTitle.textContent = `Officers for ${stationName}`;
-                detailsContent.innerHTML = `<p><strong>Officers:</strong> ${details.Officers}</p>`;
+                let tableHtml = '';
+                officersForStation.forEach(officer => {
+                    tableHtml += '<table class="officer-table-in-modal"><tbody>';
+                    for (const key in officer) {
+                        if (officer.hasOwnProperty(key)) {
+                            if (key !== 'Police Station') { // Don't repeat the station name
+                                tableHtml += `<tr><td><strong>${key}</strong></td><td>${officer[key]}</td></tr>`;
+                            }
+                        }
+                    }
+                    tableHtml += '</tbody></table><hr>';
+                });
+                detailsContent.innerHTML = tableHtml;
                 openModal('detailsModal');
             } else {
-                detailsModalTitle.textContent = `Officers for ${stationName}`;
-                detailsContent.innerHTML = `<p>No officer details found for this station in the summary list.</p>`;
+                detailsModalTitle.textContent = `No Details Found`;
+                detailsContent.innerHTML = `<p>No officer details found for ${stationName}.</p>`;
                 openModal('detailsModal');
             }
         }
@@ -707,6 +850,7 @@
                             let officerId = result.type === 'officer' ? result.name.replace(/[^a-zA-Z0-9]/g, '') : null;
                             
                             highlightItem(stationName, officerId);
+                            showFullDetailsInModal(stationName); // Show dialog on search click
                             searchInput.value = '';
                             autocompleteList.style.display = 'none';
                         });
@@ -730,7 +874,9 @@
 
         function highlightItem(stationName, officerId = null) {
             clearHighlights();
-            const stationToHighlight = document.querySelector(`.police-station .station-name-text[data-name="${stationName}"]`).closest('.police-station');
+            const stationToHighlight = document.querySelector(`.police-station .station-name-text[data-name="${stationName}"]`)?.closest('.police-station') ||
+                                     document.querySelector(`.other-unit-box .station-name-text[data-name="${stationName}"]`)?.closest('.other-unit-box');
+            
             if (stationToHighlight) {
                 const parentGroup = stationToHighlight.closest('.sub-division-group');
                 const subdivisionDiv = document.querySelector(`.sub-division[data-subdivision="${parentGroup.dataset.subdivision}"]`);
