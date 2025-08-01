@@ -94,9 +94,9 @@
             bottom: -20px;
             width: 0;
             height: 0;
-            border-left: 10px solid transparent;
-            border-right: 10px solid transparent;
-            border-top: 20px solid #a52a2a;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 16px solid #004d99;
             transform: translateX(-50%);
         }
 
@@ -142,9 +142,9 @@
             left: 50%;
             width: 0;
             height: 0;
-            border-left: 8px solid transparent;
-            border-right: 8px solid transparent;
-            border-bottom: 16px solid #004d99;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 20px solid #004d99;
             transform: translateX(-50%);
         }
 
@@ -411,7 +411,6 @@
     </style>
 </head>
 <body>
-    <!-- Designed and developed by Vishal Kumar 3461/TSS Mob. no. 78886-83399 -->
 
     <div class="chart-container">
         <h1 class="main-heading">COMMUNICATION NETWORK CHART OF DISTT. TARN TARAN</h1>
@@ -545,6 +544,18 @@
     </div>
 
     <script>
+        const chartContactData = {
+            "City TTN": { "Officers": "Sh. Harmanbir Singh, Sh. Deepak Pareek IPS" },
+            "Jhabal": { "Officers": "Sh. Baljit Singh, Sh. Ajayraj Singh" },
+            "S.A Khan": { "Officers": "Sh. Kamaljit Singh, Sh Grinderpal Singh" },
+            "Verowal": { "Officers": "Sh.Harpreet Singh" },
+            "Goindwal Sahib": { "Officers": "Sh. Gulzar Singh, Sh. Rashpal Singh, Sh. Varun sharma" },
+            "Patti": { "Officers": "Sh. Lovekesh, Sh. Jaswinder singh" },
+            "Bhikhiwind": { "Officers": "Sh. Preetinder Singh, Sh. Atul Soni" },
+            "Sadar Patti": { "Officers": "Sh. Harinderjit Singh" },
+            "DPO Tarn Taran": { "Officers": "Insp Sharanjit Singh, Sh. Navtej Singh" },
+        };
+        
         const officerData = [
             { "Name of Officer": "Sh. Harmanbir Singh", "Designation": "IP DIG/FZR Range", "Office/Residence": "01632-244038, 01632-245230", "Mobile Number": "94170-11111", "Reader Name": "ASI Nirmal Singh", "Reader Mobile Number": "85588-50541", "Police Station": "City TTN" },
             { "Name of Officer": "Sh. Deepak Pareek IPS", "Designation": "SSP Tarn Taran", "Office/Residence": "01852-289100, 01852-20200", "Mobile Number": "88607-23732, 77197-16367", "Reader Name": "SI Bhupinder Singh, ASI Gurwinder Singh", "Reader Mobile Number": "99152-09873, 95018-00994", "Police Station": "City TTN" },
@@ -616,9 +627,23 @@
             const target = event.target.closest('.police-station');
             if (target) {
                 const stationName = target.querySelector('.station-name-text').textContent.trim();
-                alert(`Police Station: ${stationName}`);
+                showContactDetailsFromChart(stationName);
             }
         });
+
+        // Function to show simplified contact details from the chart
+        function showContactDetailsFromChart(stationName) {
+            const details = chartContactData[stationName];
+            if (details) {
+                detailsModalTitle.textContent = `Officers for ${stationName}`;
+                detailsContent.innerHTML = `<p><strong>Officers:</strong> ${details.Officers}</p>`;
+                openModal('detailsModal');
+            } else {
+                detailsModalTitle.textContent = `Officers for ${stationName}`;
+                detailsContent.innerHTML = `<p>No officer details found for this station in the summary list.</p>`;
+                openModal('detailsModal');
+            }
+        }
 
         function openModal(modalId) {
             const modalElement = document.getElementById(modalId);
@@ -645,8 +670,6 @@
                 
                 // Search officer data for any matching detail
                 officerData.forEach(officer => {
-                    const officerName = officer['Name of Officer'];
-                    const stationName = officer['Police Station'];
                     let foundMatch = false;
                     for (const key in officer) {
                         if (officer.hasOwnProperty(key) && String(officer[key]).toLowerCase().includes(searchTerm)) {
@@ -655,7 +678,7 @@
                         }
                     }
                     if (foundMatch) {
-                        combinedResults.add({ type: 'officer', name: officerName, station: stationName, designation: officer['Designation'] });
+                        combinedResults.add({ type: 'officer', name: officer['Name of Officer'], station: officer['Police Station'] });
                     }
                 });
 
@@ -672,9 +695,10 @@
                     combinedResults.forEach(result => {
                         const li = document.createElement('li');
                         if (result.type === 'officer') {
-                             li.textContent = `${result.name} (${result.designation}) - ${result.station}`;
+                             const officer = officerData.find(o => o['Name of Officer'] === result.name);
+                             li.textContent = `${officer['Name of Officer']} (${officer['Designation']})`;
                         } else {
-                            li.textContent = result.name;
+                            li.textContent = `Station: ${result.name}`;
                         }
 
                         li.addEventListener('click', () => {
