@@ -66,6 +66,9 @@
             padding: 10px;
             cursor: pointer;
             border-bottom: 1px solid #eee;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .autocomplete-list li:hover {
@@ -370,7 +373,7 @@
         <h1 class="main-heading">COMMUNICATION NETWORK CHART OF DISTT. TARN TARAN</h1>
 
         <div class="search-container">
-            <input type="text" id="search-input" class="search-input" placeholder="Search police station by code...">
+            <input type="text" id="search-input" class="search-input" placeholder="Search police station or officer...">
             <ul id="autocomplete-list" class="autocomplete-list"></ul>
         </div>
         
@@ -494,120 +497,70 @@
     </div>
 
     <script>
-        const contactData = {
-            "City TTN": {
-                "Name of Officer": "SI Ranjit Singh",
-                "Office No": "01852-227200",
-                "Mobile Number": "94647-74040",
-                "MHC Name": "LR/ASI Gurpreet Singh",
-                "MHC Mobile Number": "84272-19900, 77197-16301"
-            },
-            "Jhabal": {
-                "Name of Officer": "Insp. Paramjit Singh",
-                "Office No": "01852-277221",
-                "Mobile Number": "98773-90622",
-                "MHC Name": "HC Gurdev Singh",
-                "MHC Mobile Number": "90824-60004, 77197-16302"
-            },
-            "S.A Khan": {
-                "Name of Officer": "SI Amrik Singh",
-                "Office No": "01852-272523",
-                "Mobile Number": "98762-96116",
-                "MHC Name": "S/CT Harkawal Singh",
-                "MHC Mobile Number": "99149-20070, 77197-16303"
-            },
-            "Verowal": {
-                "Name of Officer": "SI Naresh Kumar",
-                "Office No": "01859-279114",
-                "Mobile Number": "99157-77977",
-                "MHC Name": "S/CT Simarpreet Singh",
-                "MHC Mobile Number": "98722-33916, 77197-16304"
-            },
-            "Goindwal Sahib": {
-                "Name of Officer": "SI Balraj Singh",
-                "Office No": "01859-222216",
-                "Mobile Number": "97800-07231",
-                "MHC Name": "LR/ASI Gurmam Singh",
-                "MHC Mobile Number": "82838-01701, 77197-16305"
-            },
-            "Sadar TTN": {
-                "Name of Officer": "SI Avtar Singh",
-                "Office No": "01852-227300",
-                "Mobile Number": "84271-00097",
-                "MHC Name": "HC Malkiat Singh",
-                "MHC Mobile Number": "97798-29390, 77197-16306"
-            },
-            "Chola Sahib": {
-                "Name of Officer": "SI Baljinder Singh",
-                "Office No": "",
-                "Mobile Number": "98880-15612",
-                "MHC Name": "S/CT Amanjit Singh",
-                "MHC Mobile Number": "98780-07351, 77197-16307"
-            },
-            "City Patti": {
-                "Name of Officer": "INSP Kawaljit Rai",
-                "Office No": "01851-244939",
-                "Mobile Number": "98889-14414",
-                "MHC Name": "HC Amrinder Singh",
-                "MHC Mobile Number": "98150-09760, 77197-16308"
-            },
-            "Sadar Patti": {
-                "Name of Officer": "INSP Gurcharan Singh",
-                "Office No": "",
-                "Mobile Number": "95920-48900",
-                "MHC Name": "HC Harpreet Singh",
-                "MHC Mobile Number": "90716-13000, 77197-16309"
-            },
-            "Sarhali": {
-                "Name of Officer": "SI Gurinder Singh",
-                "Office No": "01852-240152",
-                "Mobile Number": "73472-83939",
-                "MHC Name": "HC Sukhwinder Singh",
-                "MHC Mobile Number": "81959-62000, 77197-16310"
-            },
-            "Harike": {
-                "Name of Officer": "Insp.Harpreet Singh",
-                "Office No": "01851-238352",
-                "Mobile Number": "95921-31900",
-                "MHC Name": "LR/ASI Dilbag Singh",
-                "MHC Mobile Number": "9878904378, 77197-16311"
-            },
-            "Bhikhiwind": {
-                "Name of Officer": "Insp Manoj Kumar",
-                "Office No": "01851-272024",
-                "Mobile Number": "85580-16710",
-                "MHC Name": "HC Sukhraj Singh",
-                "MHC Mobile Number": "98722-93995, 77197-16312"
-            },
-            "Valtoha": {
-                "Name of Officer": "SI.Gurmurkh Singh",
-                "Office No": "01851-224108",
-                "Mobile Number": "73070-85457",
-                "MHC Name": "HC Gurnaib Singh",
-                "MHC Mobile Number": "98144-88868, 77197-16313"
-            },
-            "Khemkaran": {
-                "Name of Officer": "SI.Balbir Singh",
-                "Office No": "01851-268626",
-                "Mobile Number": "97797-10006",
-                "MHC Name": "LR/ASI Avtar Singh",
-                "MHC Mobile Number": "98770-26360, 77197-16314"
-            },
-            "Khalra": {
-                "Name of Officer": "LR/INSP Ranjit Singh",
-                "Office No": "01851-277323",
-                "Mobile Number": "99154-00597",
-                "MHC Name": "S/CT Gurrbinder Singh",
-                "MHC Mobile Number": "98143-13044, 77197-16315"
-            },
-            "Kacha Packka": {
-                "Name of Officer": "SI Balraj Singh",
-                "Office No": "01851-250666",
-                "Mobile Number": "98726-80717",
-                "MHC Name": "HC Daljit Singh",
-                "MHC Mobile Number": "98883-96866, 77197-16316"
-            }
+        const officerData = {
+            "City TTN": [
+                { "Name of Officer": "Sh. Harmanbir Singh", "Designation": "IP DIG/FZR Range", "Office/Residence": "01632-244038, 01632-245230", "Mobile Number": "94170-11111", "Reader Name": "ASI Nirmal Singh", "Reader Mobile Number": "85588-50541" },
+                { "Name of Officer": "Sh. Deepak Pareek IPS", "Designation": "SSP Tarn Taran", "Office/Residence": "01852-289100, 01852-20200", "Mobile Number": "88607-23732, 77197-16367", "Reader Name": "SI Bhupinder Singh, ASI Gurwinder Singh", "Reader Mobile Number": "99152-09873, 95018-00994" }
+            ],
+            "Jhabal": [
+                { "Name of Officer": "Sh. Baljit Singh", "Designation": "SP/HQ", "Office/Residence": "01852-289100", "Mobile Number": "98152-01972", "Reader Name": "ASI Sukhchain Singh", "Reader Mobile Number": "84370-15040" },
+                { "Name of Officer": "Sh. Ajayraj Singh", "Designation": "SP/INV", "Office/Residence": "01852-289100", "Mobile Number": "99147-26789", "Reader Name": "ASI Manpreet Singh", "Reader Mobile Number": "98783-80200" }
+            ],
+            "S.A Khan": [
+                { "Name of Officer": "Sh. Kamaljit Singh", "Designation": "DSP/HQ/TTN", "Office/Residence": "01852-289100", "Mobile Number": "98881-46346, 77197-16110", "Reader Name": "LR/ASI Gurdev Singh", "Reader Mobile Number": "77197-28358" },
+                { "Name of Officer": "Sh Grinderpal Singh", "Designation": "DSP INV (D)", "Office/Residence": "01852-222384", "Mobile Number": "92563-99999", "Reader Name": "S/CI. Gurrbinder Singh", "Reader Mobile Number": "98144-55557" }
+            ],
+            "Verowal": [
+                { "Name of Officer": "Sh.Harpreet Singh", "Designation": "DSP", "Office/Residence": "", "Mobile Number": "79732-17884", "Reader Name": "", "Reader Mobile Number": "" }
+            ],
+            "Goindwal Sahib": [
+                { "Name of Officer": "Sh. Gulzar Singh", "Designation": "DSP PBI Eco. Off. & Cyber Crime", "Office/Residence": "", "Mobile Number": "97800-86060", "Reader Name": "LR/ASI Daljit Singh", "Reader Mobile Number": "98145-33186" },
+                { "Name of Officer": "Sh. Rashpal Singh", "Designation": "DSP PBI/Spl Crime", "Office/Residence": "", "Mobile Number": "98552-67144", "Reader Name": "LR/ASI Baljit Singh", "Reader Mobile Number": "89688-12909" }
+            ],
+            "Patti": [
+                { "Name of Officer": "Sh. Gurwinder Singh", "Designation": "DSP PBI Homicide & Children", "Office/Residence": "", "Mobile Number": "99144-68899", "Reader Name": "S/CI Jagdeep Singh", "Reader Mobile Number": "97795-51577" },
+                { "Name of Officer": "Sh. Riputapan Singh", "Designation": "DSP PBI CAW & Children", "Office/Residence": "01852-226800", "Mobile Number": "97805-01317", "Reader Name": "ASI Kanwardeep Singh", "Reader Mobile Number": "98769-16227" }
+            ],
+            "Bhikhiwind": [
+                { "Name of Officer": "Sh. Atul Soni", "Designation": "DSP (SD) Goindwal", "Office/Residence": "01859-222155", "Mobile Number": "81464-24061", "Reader Name": "HC Maninder Singh", "Reader Mobile Number": "87270-30007" },
+                { "Name of Officer": "Sh. Lovekesh", "Designation": "DSP (SD) Patti", "Office/Residence": "01851-244908", "Mobile Number": "96461-96099", "Reader Name": "S/CT.Jaspal Singh", "Reader Mobile Number": "97814-86406" },
+                { "Name of Officer": "Sh. Preetinder Singh", "Designation": "DSP (SD) Bhikhiwind", "Office/Residence": "01851-299105", "Mobile Number": "78418-00001", "Reader Name": "LR/ASI Gurdip Singh", "Reader Mobile Number": "62806-09541" },
+                { "Name of Officer": "Sh. Harinderjit Singh", "Designation": "DSP CID TTN", "Office/Residence": "01852-222411", "Mobile Number": "97800-03701", "Reader Name": "HC Sarabjit Singh", "Reader Mobile Number": "75082-75163" }
+            ],
+            "DPO Tarn Taran": [
+                { "Name of Officer": "Insp Sharanjit Singh", "Designation": "DSP Vigilence", "Office/Residence": "01852-229600", "Mobile Number": "98784-20140", "Reader Name": "", "Reader Mobile Number": "" },
+                { "Name of Officer": "Sh. Navtej Singh", "Designation": "DSP-C-1 TTN", "Office/Residence": "", "Mobile Number": "99882-22223", "Reader Name": "HC Varinder Singh", "Reader Mobile Number": "78891-82974" }
+            ],
+            "Supdt. Jail Goindwal Sahib": [
+                { "Name of Officer": "Sh. Varun sharma", "Designation": "Supdt. Jail Goindwal Sahib", "Office/Residence": "01859-223950", "Mobile Number": "78883-72490", "Reader Name": "OPR. 95016-04270", "Reader Mobile Number": "84274-90136, 98555-10734" }
+            ],
+            "Supdt. Sub Jail Patti": [
+                { "Name of Officer": "Sh. Jaswinder singh", "Designation": "Supdt. Sub Jail Patti", "Office/Residence": "01851-244567", "Mobile Number": "97796-38836", "Reader Name": "HC Sukhdev Singh", "Reader Mobile Number": "98155-25966" }
+            ]
         };
+
+        const officerStationMap = {
+            "Sh. Harmanbir Singh": "City TTN",
+            "Sh. Deepak Pareek IPS": "City TTN",
+            "Sh. Baljit Singh": "Jhabal",
+            "Sh. Ajayraj Singh": "Jhabal",
+            "Sh. Kamaljit Singh": "S.A Khan",
+            "Sh Grinderpal Singh": "S.A Khan",
+            "Sh.Harpreet Singh": "Verowal",
+            "Sh. Gulzar Singh": "Goindwal Sahib",
+            "Sh. Rashpal Singh": "Goindwal Sahib",
+            "Sh. Gurwinder Singh": "Patti",
+            "Sh. Riputapan Singh": "Patti",
+            "Sh. Atul Soni": "Bhikhiwind",
+            "Sh. Lovekesh": "Bhikhiwind",
+            "Sh. Preetinder Singh": "Bhikhiwind",
+            "Sh. Harinderjit Singh": "Bhikhiwind",
+            "Insp Sharanjit Singh": "DPO Tarn Taran",
+            "Sh. Navtej Singh": "DPO Tarn Taran",
+            "Sh. Varun sharma": "Supdt. Jail Goindwal Sahib",
+            "Sh. Jaswinder singh": "Supdt. Sub Jail Patti"
+        };
+
 
         const detailsModal = document.getElementById("detailsModal");
         const detailsModalTitle = document.getElementById("details-modal-title");
@@ -621,7 +574,6 @@
             const subdivisionDiv = document.querySelector(`.sub-division[data-subdivision="${subdivisionId}"]`);
             const groupDiv = document.querySelector(`.sub-division-group[data-subdivision="${subdivisionId}"]`);
 
-            // This is the core logic that is more reliable on all devices
             subdivisionDiv.classList.toggle('expanded');
             groupDiv.classList.toggle('expanded');
         }
@@ -656,16 +608,27 @@
             autocompleteList.innerHTML = '';
             
             if (searchTerm.length > 0) {
-                const results = allPoliceStations.filter(station => 
+                const officerResults = Object.keys(officerStationMap).filter(officerName =>
+                    officerName.toLowerCase().includes(searchTerm)
+                );
+                
+                const codeResults = allPoliceStations.filter(station =>
                     station.dataset.code.toLowerCase().includes(searchTerm)
                 );
 
-                if (results.length > 0) {
-                    results.forEach(station => {
+                const results = new Set([...officerResults, ...codeResults.map(s => s.querySelector('.station-name-text').textContent.trim())]);
+                
+                if (results.size > 0) {
+                    results.forEach(result => {
                         const li = document.createElement('li');
-                        li.textContent = `${station.querySelector('.ps-code').textContent} - ${station.querySelector('.station-name-text').textContent}`;
+                        li.textContent = result;
                         li.addEventListener('click', () => {
-                            highlightStation(station.dataset.code);
+                            let stationName = result;
+                            if (officerStationMap[result]) {
+                                stationName = officerStationMap[result];
+                            }
+                            highlightStation(stationName);
+                            showContactDetails(stationName);
                             searchInput.value = '';
                             autocompleteList.style.display = 'none';
                         });
@@ -687,14 +650,13 @@
             }
         });
 
-        function highlightStation(code) {
+        function highlightStation(stationName) {
             clearHighlights();
-            const stationToHighlight = document.querySelector(`.police-station[data-code="${code}"]`);
+            const stationToHighlight = document.querySelector(`.police-station .station-name-text[data-name="${stationName}"]`).closest('.police-station');
             if (stationToHighlight) {
                 const parentGroup = stationToHighlight.closest('.sub-division-group');
                 const subdivisionDiv = document.querySelector(`.sub-division[data-subdivision="${parentGroup.dataset.subdivision}"]`);
                 
-                // Ensure the parent group is expanded using the robust class-toggle
                 if (parentGroup && !parentGroup.classList.contains('expanded')) {
                     subdivisionDiv.classList.add('expanded');
                     parentGroup.classList.add('expanded');
@@ -711,16 +673,19 @@
         }
 
         function showContactDetails(stationName) {
-            const details = contactData[stationName];
+            const details = officerData[stationName];
             if (details) {
                 detailsModalTitle.textContent = `Contact Details for ${stationName}`;
-                let tableHtml = '<table><thead><tr><th>Category</th><th>Details</th></tr></thead><tbody>';
-                for (const key in details) {
-                    if (details.hasOwnProperty(key)) {
-                        tableHtml += `<tr><td><strong>${key}</strong></td><td>${details[key]}</td></tr>`;
+                let tableHtml = '';
+                details.forEach(officer => {
+                    tableHtml += '<table><tbody>';
+                    for (const key in officer) {
+                        if (officer.hasOwnProperty(key)) {
+                            tableHtml += `<tr><td><strong>${key}</strong></td><td>${officer[key]}</td></tr>`;
+                        }
                     }
-                }
-                tableHtml += '</tbody></table>';
+                    tableHtml += '</tbody></table><hr>';
+                });
                 detailsContent.innerHTML = tableHtml;
                 openModal('detailsModal');
             } else {
