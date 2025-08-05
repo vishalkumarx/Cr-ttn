@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Communication Network Chart of Distt. Tarn Taran</title>
     <style>
+        /* Base styles for all screen sizes */
         body {
             font-family: sans-serif;
             background-color: #f4f4f4;
@@ -20,13 +21,13 @@
             max-width: 1200px;
             margin: auto;
         }
-        
+
         .logo-container {
             text-align: center;
             margin-bottom: 20px;
         }
 
-        .logo-container img { 
+        .logo-container img {
             max-width: 100px;
             height: auto;
         }
@@ -38,7 +39,6 @@
             margin-bottom: 20px;
         }
 
-        /* Search bar styles */
         .search-container {
             position: relative;
             width: 100%;
@@ -71,7 +71,7 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             display: none;
         }
-        
+
         .autocomplete-list li {
             padding: 10px;
             cursor: pointer;
@@ -194,7 +194,6 @@
             background-color: #61b3d8;
         }
 
-        /* Highlighting for search results */
         .police-station.highlight, .officer-row.highlight, .other-unit-box.highlight {
             box-shadow: 0 0 10px 3px #ffc107;
             background-color: #ffd700 !important;
@@ -213,7 +212,7 @@
             border-bottom: 16px solid #004d99;
             transform: translateX(-50%);
         }
-        
+
         .ps-code {
             display: inline-block;
             background-color: #004d99;
@@ -225,13 +224,13 @@
             margin-top: 5px;
             font-family: monospace;
         }
-        
+
         .ps-name {
             font-size: 1em;
             color: #333;
             font-weight: bold;
         }
-        
+
         .station-name-text {
             color: #ff0000;
             font-size: 1.1em;
@@ -263,7 +262,7 @@
         .legend-box.green { background-color: #3cb371; }
         .legend-box.blue { background-color: #87ceeb; }
         .legend-box.darkblue { background-color: #004d99; }
-        
+
         /* Modal styles */
         .modal {
             display: none;
@@ -302,7 +301,6 @@
             cursor: pointer;
         }
 
-        /* Styles for the details modal */
         #detailsModal .modal-content {
             max-width: 600px;
             text-align: left;
@@ -326,18 +324,17 @@
         .officer-table-in-modal tr td:first-child {
             font-weight: bold;
         }
-        
+
         .location-link {
             color: #004d99;
             text-decoration: none;
             font-weight: bold;
         }
-        
+
         .location-link:hover {
             text-decoration: underline;
         }
 
-        /* New styles for the officer details section */
         #officer-details-container {
             margin-top: 40px;
             padding: 20px;
@@ -353,28 +350,36 @@
             padding-bottom: 10px;
         }
 
-        #officer-details-table {
+        .officer-details-table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
         }
 
-        #officer-details-table th, #officer-details-table td {
+        .officer-details-table th, .officer-details-table td {
             padding: 12px;
             text-align: left;
             border-bottom: 1px solid #ddd;
         }
 
-        #officer-details-table th {
+        .officer-details-table th {
             background-color: #f2f2f2;
             font-weight: bold;
         }
-        
-        #officer-details-table tr:hover {
+
+        .officer-details-table tr:hover {
             background-color: #f9f9f9;
         }
 
-        /* === MOBILE-FRIENDLY STYLES === */
+        /* Responsive table for small screens */
+        .table-responsive {
+            display: block;
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* --- MEDIA QUERIES FOR MOBILE DEVICES --- */
         @media (max-width: 768px) {
             body {
                 padding: 10px;
@@ -389,6 +394,7 @@
                 margin-bottom: 10px;
             }
 
+            /* Stack sub-divisions vertically */
             .sub-divisions {
                 flex-direction: column;
                 margin-bottom: 20px;
@@ -398,8 +404,15 @@
                 width: 100%;
                 margin-bottom: 10px;
                 padding: 15px;
+                box-sizing: border-box; /* Ensures padding is included in the width */
             }
 
+            /* Adjust arrows for stacked layout */
+            .sub-division::before {
+                display: none;
+            }
+
+            /* Stack police stations vertically */
             .police-stations {
                 flex-direction: column;
                 align-items: center;
@@ -410,12 +423,19 @@
                 margin-bottom: 20px;
                 flex-direction: column;
                 align-items: center;
+                box-sizing: border-box;
             }
 
             .police-station, .other-unit-box {
                 width: 90%;
                 flex-basis: auto;
                 margin-bottom: 10px;
+                box-sizing: border-box;
+            }
+
+            /* Adjust arrows for stacked police stations */
+            .police-station::before, .other-unit-box::before {
+                display: none;
             }
 
             .modal-content {
@@ -425,12 +445,11 @@
 
             .bottom-legend {
                 text-align: left;
-            }
-            #officer-details-table {
                 font-size: 0.8em;
-                display: block;
-                overflow-x: auto;
-                white-space: nowrap;
+            }
+
+            .officer-details-table th, .officer-details-table td {
+                padding: 8px; /* Reduce padding for smaller screens */
             }
         }
     </style>
@@ -447,7 +466,7 @@
             <input type="text" id="search-input" class="search-input" placeholder="Search police station or officer details...">
             <ul id="autocomplete-list" class="autocomplete-list"></ul>
         </div>
-        
+
         <div class="control-room">
             Control Room Tarn Taran<br>Romeo-3
         </div>
@@ -458,9 +477,9 @@
             <div class="sub-division" onclick="toggleSubdivision('Patti')" data-subdivision="Patti">Sub Division Patti</div>
             <div class="sub-division" onclick="toggleSubdivision('Bhikhiwind')" data-subdivision="Bhikhiwind">Sub Division Bhikhiwind</div>
         </div>
-        
+
         <div class="police-stations" id="police-stations-container">
-            
+
             <div class="sub-division-group" data-subdivision="Tarn Taran">
                 <div class="police-station" data-code="Lima-20">
                     <span class="ps-name">Police Station<br><span class="station-name-text" data-name="City TTN">City TTN</span></span><br>
@@ -475,7 +494,7 @@
                     <span class="ps-code">Lima-23</span>
                 </div>
                 <div class="police-station" data-code="Lima-34">
-                    <span class="ps-name">Police Station<br><span class="station-name-text" data-name="Verowal">Verowal</span></span><br>  
+                    <span class="ps-name">Police Station<br><span class="station-name-text" data-name="Verowal">Verowal</span></span><br>
                     <span class="ps-code">Lima-34</span>
                 </div>
             </div>
@@ -536,8 +555,6 @@
                     <span class="ps-code">Lima-35</span>
                 </div>
             </div>
-            
-            
 
             <div class="sub-division-group" data-subdivision="Police Posts">
                 <div class="other-unit-box" data-code="Town Tarn Taran">
@@ -579,7 +596,7 @@
             </div>
 
         </div>
-        
+
         <div class="bottom-legend">
             <div class="legend-item">
                 <span class="legend-box darkblue"></span>Sub Division : 4
@@ -595,7 +612,7 @@
             </div>
         </div>
     </div>
-    
+
     <div id="officer-details-container" class="chart-container">
         <h2 class="sub-heading">Officer List and Details</h2>
         <div id="officer-details-table-container"></div>
@@ -633,7 +650,7 @@
             { "Name of Officer": "Sh. Navtej Singh", "Designation": "DSP-C-1 TTN", "Office/Residence": "", "Mobile Number": "99882-22223", "Reader Name": "HC Varinder Singh", "Reader Mobile Number": "78891-82974", "Police Station": "DPO Tarn Taran", "page": 1 },
             { "Name of Officer": "Sh. Varun sharma", "Designation": "Supdt. Jail Goindwal Sahib", "Office/Residence": "01859-223950", "Mobile Number": "78883-72490", "Reader Name": "OPR. 95016-04270", "Reader Mobile Number": "84274-90136, 98555-10734", "Police Station": "Goindwal Sahib", "page": 1 },
             { "Name of Officer": "Sh. Jaswinder singh", "Designation": "Supdt. Sub Jail Patti", "Office/Residence": "01851-244567", "Mobile Number": "97796-38836", "Reader Name": "HC Sukhdev Singh", "Reader Mobile Number": "98155-25966", "Police Station": "Patti", "page": 1 },
-            
+
             // Page 2: Police Stations Contact List with dummy location links
             { "Name of Officer": "SI Ranjit Singh", "Police Station": "City TTN", "Office No": "01852-227200", "Mobile Number": "94647-74040", "MHC Name": "LR/ASI Gurpreet Singh", "MHC Mobile Number": "84272-19900,77197-16301", "locationLink": "https://www.google.com/maps/search/Police+Station+City+Tarn+Taran", "page": 2 },
             { "Name of Officer": "Insp. Paramjit Singh", "Police Station": "Jhabal", "Office No": "01852-277221", "Mobile Number": "98773-90622", "MHC Name": "HC Gurdev Singh", "MHC Mobile Number": "90824-60004,77197-16302", "locationLink": "https://www.google.com/maps/search/Police+Station+Jhabal", "page": 2 },
@@ -705,7 +722,7 @@
             { "Name of Officer": "ASI Bikramjit Singh", "Designation": "Finacial investigation unit Finacial officer", "Office/Residence": "01852-289117", "Mobile Number": "81461-35553, 98885-82244", "MHC Name": "Anita", "MHC Mobile Number": "78886-84917", "Police Station": "DPO Tarn Taran", "page": 4 },
             { "Name of Officer": "Satnam Singh", "Designation": "PSO TO SSP Sa", "Office/Residence": "", "Mobile Number": "98140-05867", "MHC Name": "", "MHC Mobile Number": "", "Police Station": "DPO Tarn Taran", "page": 4 },
         ];
-        
+
         const detailsModal = document.getElementById("detailsModal");
         const detailsModalTitle = document.getElementById("details-modal-title");
         const detailsContent = document.getElementById("details-content");
@@ -728,10 +745,10 @@
             for (const pageNum in pageData) {
                 const officersOnPage = pageData[pageNum];
                 const pageTitle = getPageTitle(pageNum);
-                
+
                 let pageHtml = `<h3>${pageTitle}</h3>`;
                 pageHtml += '<div class="table-responsive"><table class="officer-details-table"><thead><tr>';
-                
+
                 const allHeaders = new Set();
                 officersOnPage.forEach(officer => {
                     Object.keys(officer).forEach(key => allHeaders.add(key));
@@ -766,16 +783,37 @@
                 default: return "Officer Details";
             }
         }
-        
+
         document.addEventListener('DOMContentLoaded', renderOfficerTable);
 
         function toggleSubdivision(subdivisionId) {
             const subdivisionDiv = document.querySelector(`.sub-division[data-subdivision="${subdivisionId}"]`);
             const groupDiv = document.querySelector(`.sub-division-group[data-subdivision="${subdivisionId}"]`);
-            subdivisionDiv.classList.toggle('expanded');
-            groupDiv.classList.toggle('expanded');
+
+            const isExpanded = groupDiv.classList.contains('expanded');
+
+            // Collapse any currently expanded subdivision
+            document.querySelectorAll('.sub-division.expanded').forEach(div => {
+                if (div !== subdivisionDiv) {
+                    div.classList.remove('expanded');
+                }
+            });
+            document.querySelectorAll('.sub-division-group.expanded').forEach(div => {
+                if (div !== groupDiv) {
+                    div.classList.remove('expanded');
+                }
+            });
+
+            // Toggle the clicked one
+            if (!isExpanded) {
+                subdivisionDiv.classList.add('expanded');
+                groupDiv.classList.add('expanded');
+            } else {
+                subdivisionDiv.classList.remove('expanded');
+                groupDiv.classList.remove('expanded');
+            }
         }
-        
+
         document.getElementById('police-stations-container').addEventListener('click', (event) => {
             const target = event.target.closest('.police-station') || event.target.closest('.other-unit-box');
             if (target) {
@@ -786,7 +824,7 @@
 
         function showPoliceStationContacts(stationName) {
             const officersForStation = officerData.filter(o => o['Police Station'] === stationName && o.page == 2);
-            
+
             if (officersForStation.length > 0) {
                 detailsModalTitle.textContent = `Police Station Contacts for ${stationName}`;
                 let tableHtml = '';
@@ -876,10 +914,10 @@
         searchInput.addEventListener('input', (e) => {
             const searchTerm = e.target.value.toLowerCase();
             autocompleteList.innerHTML = '';
-            
+
             if (searchTerm.length > 0) {
                 const combinedResults = new Set();
-                
+
                 officerData.forEach(officer => {
                     let foundMatch = false;
                     for (const key in officer) {
@@ -916,15 +954,15 @@
                             clearHighlights();
                             let stationName = result.type === 'officer' ? result.station : result.name;
                             let officerId = result.type === 'officer' ? result.name.replace(/[^a-zA-Z0-9]/g, '') : null;
-                            
+
                             highlightItem(stationName, officerId);
-                            
+
                             if (result.type === 'officer') {
                                 showSingleOfficerDetailsInModal(result.name);
                             } else {
                                 showPoliceStationContacts(stationName);
                             }
-                            
+
                             searchInput.value = '';
                             autocompleteList.style.display = 'none';
                         });
@@ -939,7 +977,7 @@
                 clearHighlights();
             }
         });
-        
+
         document.addEventListener('click', (e) => {
             if (!searchInput.contains(e.target) && !autocompleteList.contains(e.target)) {
                 autocompleteList.style.display = 'none';
@@ -948,7 +986,7 @@
 
         function highlightItem(stationName, officerId = null) {
             clearHighlights();
-            
+
             // Highlight and scroll to the police station or unit box
             const stationToHighlight = document.querySelector(`.station-name-text[data-name="${stationName}"]`);
             if (stationToHighlight) {
