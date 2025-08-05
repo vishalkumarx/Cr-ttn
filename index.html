@@ -808,7 +808,7 @@
                     tableHtml += '<table class="officer-table-in-modal"><tbody>';
                     headers.forEach(header => {
                         if (header === 'locationLink') {
-                            tableHtml += `<tr><td><strong>Location</strong></td><td><a href="${officer[header]}" target="_blank" class="location-link">Open in Google Maps</a></td></tr>`;
+                            tableHtml += `<tr><td><strong>Location</strong></td><td><a href="${officer[header]}" target="_blank" class="location-link">Click here to open in Google Maps</a></td></tr>`;
                         } else {
                             tableHtml += `<tr><td><strong>${header}</strong></td><td>${officer[header] || ''}</td></tr>`;
                         }
