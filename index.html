@@ -808,7 +808,9 @@
                     tableHtml += '<table class="officer-table-in-modal"><tbody>';
                     headers.forEach(header => {
                         if (header === 'locationLink') {
-                            tableHtml += `<tr><td><strong>Location</strong></td><td><a href="${officer[header]}" target="_blank" class="location-link">Open in Google Maps</a></td></tr>`;
+                            if (officer[header]) {
+                                tableHtml += `<tr><td><strong>Location</strong></td><td><a href="${officer[header]}" target="_blank" class="location-link">Open in Google Maps</a></td></tr>`;
+                            }
                         } else {
                             tableHtml += `<tr><td><strong>${header}</strong></td><td>${officer[header] || ''}</td></tr>`;
                         }
@@ -839,7 +841,11 @@
                     tableHtml += '<table class="officer-table-in-modal"><tbody>';
                     headers.forEach(header => {
                         if (officer.hasOwnProperty(header)) {
-                             if (header !== 'Police Station') {
+                             if (header === 'locationLink') {
+                                 if (officer[header]) {
+                                     tableHtml += `<tr><td><strong>Location</strong></td><td><a href="${officer[header]}" target="_blank" class="location-link">Open in Google Maps</a></td></tr>`;
+                                 }
+                             } else if (header !== 'Police Station') {
                                 tableHtml += `<tr><td><strong>${header}</strong></td><td>${officer[header] || ''}</td></tr>`;
                             }
                         }
@@ -909,14 +915,19 @@
                 allPoliceStations.forEach(station => {
                     const stationName = station.querySelector('.station-name-text').textContent.trim();
                     const stationCode = station.dataset.code;
-                    if (stationName.toLowerCase().includes(searchTerm) || stationCode.toLowerCase().includes(searchTerm)) {
+                    if (stationName.toLowerCase().includes(searchTerm) || (stationCode && stationCode.toLowerCase().includes(searchTerm))) {
                         combinedResults.add({ type: 'station', name: stationName });
                     }
                 });
 
                 if (combinedResults.size > 0) {
+                    autocompleteList.style.display = 'block';
                     combinedResults.forEach(result => {
                         const li = document.createElement('li');
+                        li.dataset.type = result.type;
+                        li.dataset.name = result.name;
+                        li.dataset.station = result.station || result.name;
+
                         if (result.type === 'officer') {
                              const officer = officerData.find(o => o['Name of Officer'] === result.name);
                              const designation = officer['Designation'] || 'N/A';
@@ -924,32 +935,35 @@
                         } else {
                             li.textContent = `Station: ${result.name}`;
                         }
-
-                        li.addEventListener('click', () => {
-                            clearHighlights();
-                            let stationName = result.type === 'officer' ? result.station : result.name;
-                            let officerId = result.type === 'officer' ? result.name.replace(/[^a-zA-Z0-9]/g, '') : null;
-                            
-                            highlightItem(stationName, officerId);
-                            
-                            if (result.type === 'officer') {
-                                showSingleOfficerDetailsInModal(result.name);
-                            } else {
-                                showPoliceStationContacts(stationName);
-                            }
-                            
-                            searchInput.value = '';
-                            autocompleteList.style.display = 'none';
-                        });
                         autocompleteList.appendChild(li);
                     });
-                    autocompleteList.style.display = 'block';
                 } else {
                     autocompleteList.style.display = 'none';
                 }
             } else {
                 autocompleteList.style.display = 'none';
                 clearHighlights();
+            }
+        });
+
+        autocompleteList.addEventListener('click', (e) => {
+            const clickedItem = e.target.closest('li');
+            if (clickedItem) {
+                const type = clickedItem.dataset.type;
+                const name = clickedItem.dataset.name;
+                const station = clickedItem.dataset.station;
+                
+                clearHighlights();
+                highlightItem(station, type === 'officer' ? name.replace(/[^a-zA-Z0-9]/g, '') : null);
+                
+                if (type === 'officer') {
+                    showSingleOfficerDetailsInModal(name);
+                } else {
+                    showPoliceStationContacts(station);
+                }
+                
+                searchInput.value = '';
+                autocompleteList.style.display = 'none';
             }
         });
         
