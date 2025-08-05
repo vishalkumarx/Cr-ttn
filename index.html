@@ -1,4 +1,3 @@
-<!-- Develoved by Vishal Kumar 3461/TSS>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,6 +21,38 @@
             max-width: 1200px;
             margin: auto;
         }
+        
+        .whatsapp-contact {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 102;
+            display: flex;
+            align-items: center;
+            background-color: #25D366;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s;
+        }
+        
+        .whatsapp-contact:hover {
+            transform: scale(1.05);
+        }
+
+        .whatsapp-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
+        }
+
+        .whatsapp-text {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
 
         .logo-container {
             text-align: center;
@@ -456,6 +487,12 @@
     </style>
 </head>
 <body>
+    
+    <a href="https://wa.me/917888683399" class="whatsapp-contact" target="_blank">
+        <img class="whatsapp-icon" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp Icon">
+        <span class="whatsapp-text">Contact Developer</span>
+    </a>
+
 
     <div class="chart-container">
         <div class="logo-container">
