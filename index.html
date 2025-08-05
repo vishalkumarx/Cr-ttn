@@ -24,7 +24,7 @@
         
         .whatsapp-contact {
             position: fixed;
-            top: 20px;
+            bottom: 20px;
             right: 20px;
             z-index: 102;
             display: flex;
@@ -69,6 +69,36 @@
             font-size: 2em;
             color: #333;
             margin-bottom: 20px;
+        }
+        /* New moving message container */
+        .moving-message-container {
+            width: 100%;
+            overflow: hidden;
+            background-color: #ff4500;
+            color: white;
+            padding: 10px 0;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+
+        /* Moving message text */
+        .moving-message {
+            display: inline-block;
+            white-space: nowrap;
+            padding-left: 100%;
+            font-weight: bold;
+            font-size: 1.2em;
+            animation: marquee 20s linear infinite;
+        }
+
+        /* Keyframe animation for the marquee effect */
+        @keyframes marquee {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
         }
 
         .search-container {
@@ -488,6 +518,12 @@
 </head>
 <body>
     
+    <div class="moving-message-container">
+        <span class="moving-message">
+            This information is strictly for police officials
+        </span>
+    </div>
+
     <a href="https://wa.me/917888683399" class="whatsapp-contact" target="_blank">
         <img class="whatsapp-icon" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp Icon">
         <span class="whatsapp-text">Contact Developer</span>
@@ -737,7 +773,7 @@
             { "Name of Officer": "ASI Pargat Singh", "Designation": "CDI", "Office/Residence": "", "Mobile Number": "84274-11881", "MHC Name": "", "MHC Mobile Number": "", "Police Station": "DPO Tarn Taran", "page": 3 },
             { "Name of Officer": "ASI Love Dhawan", "Designation": "Steno", "Office/Residence": "", "Mobile Number": "98553-23630", "MHC Name": "", "MHC Mobile Number": "", "Police Station": "DPO Tarn Taran", "page": 3 },
             { "Name of Officer": "SI Kulwant Singh", "Designation": "Accountant 77197-16226", "Office/Residence": "01852-289120", "Mobile Number": "97792-09642", "MHC Name": "Cashier", "MHC Mobile Number": "", "Police Station": "DPO Tarn Taran", "page": 3 },
-            { "Name of Officer": "LR/ASI Joginder Singh", "Designation": "OASI", "Office/Residence": "77197-16220, 01852-289124", "Mobile Number": "98726-12674", "MHC Name": "LR/ASI Gurjant Singh", "MHC Mobile Number": "94640-24147", "Police Station": "DPO Tarn Taran", "page": 3 },
+            { "Name of Officer": "LR/ASI Joginder Singh", "Designation": "OASI", "Office/Residence": "77197-16220, 01852-289124", "Mobile Number": "98726-12674", "MHC Name": "LR/ASI Gurjant Singh", "Reader Mobile Number": "94640-24147", "Police Station": "DPO Tarn Taran", "page": 3 },
             { "Name of Officer": "HC Ranjit Singh", "Designation": "I/C SEC", "Office/Residence": "01852-289121", "Mobile Number": "79866-70919", "MHC Name": "LR/ASI Kuldeep Singh", "MHC Mobile Number": "97797-22400", "Police Station": "DPO Tarn Taran", "page": 3 },
             // Page 4: More DPO/Police Lines
             { "Name of Officer": "HC. Manjinder Singh", "Designation": "I/C SPL/BR SPL/BR", "Office/Residence": "77197-16229", "Mobile Number": "94632-25028, 95555-04747", "MHC Name": "ASI Parveen Kumar", "MHC Mobile Number": "99151-62300", "Police Station": "DPO Tarn Taran", "page": 4 },
