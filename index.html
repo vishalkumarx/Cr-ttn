@@ -1,5 +1,4 @@
-
-<!-- Developed by Vishal kumar 3461/TSS-->
+<!-- Develoved by Vishal Kumar 3461/TSS>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -107,7 +106,7 @@
             width: 0;
             height: 0;
             border-left: 8px solid transparent;
-            border-right: 8px solid transparent;
+            border-right: 8-px solid transparent;
             border-bottom: 16px solid #004d99;
             transform: translateX(-50%);
         }
@@ -792,27 +791,21 @@
             const subdivisionDiv = document.querySelector(`.sub-division[data-subdivision="${subdivisionId}"]`);
             const groupDiv = document.querySelector(`.sub-division-group[data-subdivision="${subdivisionId}"]`);
 
-            const isExpanded = groupDiv.classList.contains('expanded');
+            const isCurrentlyExpanded = subdivisionDiv.classList.contains('expanded');
 
-            // Collapse any currently expanded subdivision
-            document.querySelectorAll('.sub-division.expanded').forEach(div => {
-                if (div !== subdivisionDiv) {
-                    div.classList.remove('expanded');
-                }
-            });
-            document.querySelectorAll('.sub-division-group.expanded').forEach(div => {
-                if (div !== groupDiv) {
-                    div.classList.remove('expanded');
-                }
+            // Collapse all other subdivisions and their groups
+            document.querySelectorAll('.sub-division').forEach(div => {
+                div.classList.remove('expanded');
             });
 
-            // Toggle the clicked one
-            if (!isExpanded) {
+            document.querySelectorAll('.sub-division-group').forEach(group => {
+                group.classList.remove('expanded');
+            });
+
+            // If the clicked subdivision was not already expanded, expand it now
+            if (!isCurrentlyExpanded) {
                 subdivisionDiv.classList.add('expanded');
                 groupDiv.classList.add('expanded');
-            } else {
-                subdivisionDiv.classList.remove('expanded');
-                groupDiv.classList.remove('expanded');
             }
         }
 
